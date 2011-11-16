@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<sql>
+	<commands>
+		<command id="duplicate-ip-check">
+			SELECT id
+			FROM ip_access
+			WHERE
+				ip_address = '#ip_address#'
+				AND NOT id = '#id#'
+		</command>
+		<command id="create-new">
+			INSERT INTO ip_access
+			SET
+				is_active = '#is_active#',
+				ip_address = '#ip_address#',
+				description = '#description#'
+		</command>
+		<command id="update">
+			UPDATE ip_access
+			SET
+				is_active = '#is_active#',
+				ip_address = '#ip_address#',
+				description = '#description#'
+			WHERE id = '#id#'
+		</command>
+		<command id="delete">
+			DELETE FROM ip_access WHERE id = '#id#'
+		</command>
+		<command id="get-record">
+			SELECT
+				is_active,
+				ip_address,
+				description
+			FROM ip_access
+			WHERE id = '#id#'
+		</command>
+	</commands>
+</sql>

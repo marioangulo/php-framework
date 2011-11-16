@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<sql>
+	<commands>
+		<command id="duplicate-permission-check">
+			SELECT fk_user_id
+			FROM user_permission
+			WHERE
+				fk_user_id = '#fk_user_id#'
+				AND fk_security_id = '#id#'
+		</command>
+		<command id="add-user">
+			INSERT INTO user_permission
+			SET
+				fk_group_id = 0,
+				fk_user_id = '#fk_user_id#',
+				fk_security_id = '#id#',
+				permit = 'yes'
+		</command>
+		<command id="update">
+			UPDATE user_permission
+			SET permit = '#permit#'
+			WHERE id = '#permission_id#'
+		</command>
+		<command id="delete">
+			DELETE FROM user_permission WHERE id = '#permission_id#'
+		</command>
+		<command id="get-records">
+			SELECT
+				user_permission.id AS permission_id,
+				user_permission.permit,
+				user.username
+			FROM
+				user_permission
+				LEFT JOIN user ON user_permission.fk_user_id = user.id
+			WHERE
+				user_permission.fk_security_id = '#id#'
+				AND user_permission.fk_group_id = '0'
+		</command>
+		<command id="ajax-search-results">
+			SELECT
+				id AS fk_user_id,
+				username
+			FROM user
+			WHERE username LIKE '%#search#%' 
+			ORDER BY username
+			LIMIT 10
+		</command>
+	</commands>
+</sql>

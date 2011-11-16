@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<sql>
+	<commands>
+		<command id="get-download-data">
+			SELECT
+				user_history.id,
+				user_history.fk_user_id,
+				user_history.details,
+				user_history.timestamp_created,
+				user_history.ip_address,
+				user_history.url
+			FROM
+				user_history
+				LEFT JOIN user ON user.id = user_history.fk_user_id
+			WHERE
+				user_history.id > 0
+				AND(
+					IF(LENGTH('#username#') = 0, 1=1, user.username LIKE '%#username#%')
+				)
+				AND(
+					IF(LENGTH('#details#') = 0, 1=1, user_history.details LIKE '%#details#%')
+				)
+				AND(
+					IF('#_date_from_#' = '0000-00-00', 1=1, user_history.timestamp_created BETWEEN '#_date_from_# 00:00:00' AND '#_date_to_# 23:59:59')
+				)
+			ORDER BY timestamp_created DESC
+		</command>
+		<command id="delete-user-history">
+			DELETE user_history.*
+			FROM
+				user_history
+				LEFT JOIN user ON user_history.fk_user_id = user.id
+			WHERE
+				IF(LENGTH('#username#') = 0, 1=1, user.username LIKE '%#username#%')
+				AND(
+					IF(LENGTH('#details#') = 0, 1=1, user_history.details LIKE '%#details#%')
+				)
+				AND(
+					IF('#_date_from_#' = '0000-00-00', 1=1, user_history.timestamp_created BETWEEN '#_date_from_# 00:00:00' AND '#_date_to_# 23:59:59')
+				)
+		</command>
+		<command id="get-records">
+			SELECT SQL_CALC_FOUND_ROWS
+				user_history.id AS history_id,
+				user_history.fk_user_id,
+				user_history.details,
+				user_history.timestamp_created,
+				user_history.ip_address,
+				user_history.url,
+				IF(ISNULL(user.id), '-', user.username) AS username,
+				CONCAT('root/users/add-edit.html?id=', user.id) AS url
+			FROM
+				user_history
+				LEFT JOIN user ON user.id = user_history.fk_user_id
+			WHERE
+				IF(LENGTH('#username#') = 0, 1=1, user.username LIKE '%#username#%')
+				AND(
+					IF(LENGTH('#details#') = 0, 1=1, user_history.details LIKE '%#details#%')
+				)
+				AND(
+					IF('#_date_from_#' = '0000-00-00', 1=1, user_history.timestamp_created BETWEEN '#_date_from_# 00:00:00' AND '#_date_to_# 23:59:59')
+				)
+			ORDER BY timestamp_created DESC
+			LIMIT #_limit_#
+		</command>
+	</commands>
+</sql>

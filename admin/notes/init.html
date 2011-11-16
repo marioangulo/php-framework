@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<?xml-stylesheet type="text/xml" href="_THEME/common/plain.xsl"?>
+<html>
+    <head>
+        <meta name="require-session" />
+        <meta name="permission-id" content="1002" />
+    </head>
+    <body data-section="notes">
+		<form method="get" action="" data-label="form_add_note">
+			<span class="footprint_msg">footprint_msg</span>
+			<textarea class="stretch" name="note_data" rows="5" placeholder="enter notes"></textarea>
+			<div class="note-btn">
+				<a href="javascript:;" class="btn info" id="save_button">save</a>
+			</div>
+		</form>
+		<div data-bind-results="get-notes">
+		  <div class="note" data-label="blank-row" data-bind-function="P::RowHandler">
+			<div class="note-data" data-bind-html="data">data</div>
+			<div class="signature">
+		    	<span class="username" data-bind-text="username">username</span> @ 
+				<span class="timestamp" data-bind-text="date_created">date_created</span>
+			</div>
+			<div class="clear"></div>
+		  </div>
+		</div>
+    </body>
+</html>

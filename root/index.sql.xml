@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<sql>
+<commands>
+	<command id="total-user-count">
+		SELECT FORMAT(COUNT(1), 0) FROM user
+	</command>
+	<command id="total-group-count">
+		SELECT FORMAT(COUNT(1), 0) FROM user_group
+	</command>
+	<command id="total-history-count">
+		SELECT FORMAT(COUNT(1), 0) FROM user_history
+	</command>
+	<command id="total-error-count">
+		SELECT FORMAT(COUNT(1), 0) FROM error
+	</command>
+	<command id="date-of-oldest-error">
+		SELECT IFNULL(DATE_FORMAT(MIN(timestamp_created), '%c/%e/%y'), '---') FROM error
+	</command>
+	<command id="most-active-users">
+		SELECT 
+			user.id,
+			user.username,
+			CONCAT('root/users/history.html?id=', user.id) AS url,
+			FORMAT(COUNT(user_history.id), 0) AS total_count
+		FROM 
+			user
+			LEFT JOIN user_history ON user_history.fk_user_id = user.id
+		GROUP BY user.id
+		LIMIT 10
+	</command>
+	<command id="recent-activity">
+		SELECT 
+			user.id,
+			user.username,
+			CONCAT('root/users/history.html?id=', user.id) AS url,
+			user_history.details,
+			TIMESTAMPDIFF(SECOND, user_history.timestamp_created, '#_now_#') AS seconds_ago
+		FROM 
+			user_history
+			LEFT JOIN user ON user_history.fk_user_id = user.id
+		ORDER BY user_history.id DESC
+		LIMIT 10
+	</command>
+	<command id="recent-errors">
+		SELECT 
+			error.id,
+			CONCAT('root/errors/details.html?id=', error.id) AS url,
+			CONCAT(LEFT(error.error_message, 75), '...') AS error_message,
+			TIMESTAMPDIFF(SECOND, error.timestamp_created, '#_now_#') AS seconds_ago
+		FROM 
+			error
+		ORDER BY error.id DESC
+		LIMIT 5
+	</command>
+</commands>
+</sql>

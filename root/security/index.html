@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<?xml-stylesheet type="text/xml" href="_THEME/root/page.xsl"?>
+<html>
+    <head>
+        <title>Security</title>
+        <meta name="require-session" />
+        <meta name="permission-id" content="1001" />
+        <script language="php" src="root/security/helpers.php" type="text/php"></script>
+    </head>
+    <body>
+        <div xslt-region="nav-trail">
+        	<div class="well">
+		        <div class="float-right">
+		        	<a id="button_new" data-bind-attr="href=button_new" class="btn success">Create New</a>
+	    	    </div>
+	       		<h3 data-bind-function="H::GetBirdSeed">User Groups</h3>
+	       	</div>
+       	</div>
+       	
+       	<div data-bind-results="get-records" data-bind-paging="true">
+	        <table class="zebra-striped">
+	        	<thead class="highlight">
+		            <tr>
+		                <th>&#160;</th>
+		                <th>ID</th>
+		                <th>Child</th>
+		                <th>Name / Description</th>
+		            </tr>
+				</thead>
+				<tbody>
+		            <tr data-label="blank-row">
+		                <td><a data-bind-attr="href=url" class="btn">Edit</a></td>
+		                <td data-bind-text="id">id</td>
+		                <td data-bind-text="children_count">children_count</td>
+		                <td class="stretch">
+		                    <strong><a data-bind-text="name" data-bind-attr="href=dive_url">name</a></strong><br />
+		                    <span data-bind-text="description">description</span>
+		                </td>
+		            </tr>
+		            <tr data-label="no-results-row">
+		                <td colspan="4">No records matched your query.</td>
+		            </tr>
+				</tbody>
+	        </table>
+		</div>
+    </body>
+</html>

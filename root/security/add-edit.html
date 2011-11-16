@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<?xml-stylesheet type="text/xml" href="_THEME/root/page.xsl"?>
+<html>
+    <head>
+        <title>Security Details</title>
+        <meta name="require-session" />
+        <meta name="permission-id" content="1001" />
+        <script language="php" src="root/security/helpers.php" type="text/php"></script>
+    </head>
+    <body>
+        <div xslt-region="nav-trail">
+        	<div class="well">
+	       		<h3 data-bind-function="H::GetBirdSeed">User Groups</h3>
+	       	</div>
+       	</div>
+       	
+        <div xslt-region="sub-tabs"><!--xslt-include href="../../root/security/tabs.html"--></div>
+        
+		<span class="footprint_msg">footprint_msg</span>
+		<form action="" method="post" data-bind-form="get-record" data-bind-form-context="add-update-delete">
+			<fieldset>
+				<div class="clearfix">
+					<label for="name">Name:</label>
+					<div class="input">
+						<input type="text" data-bind-input="name" maxlength="45" size="20" name="name" />
+						<span class="help-inline"></span>
+					</div>
+				</div>
+				<div class="clearfix">
+					<label for="description">Description:</label>
+					<div class="input">
+						<textarea rows="5" cols="40" name="description" data-bind-input="description"></textarea>
+						<span class="help-inline"></span>
+					</div>
+				</div>
+			</fieldset>
+			<div class="actions">
+                <input class="btn primary" type="submit" value="Create New" name="action" id="button_new" />
+                <input class="btn primary" type="submit" value="Update" name="action" id="button_update" />
+                <input class="btn danger" type="submit" value="Delete" name="action" id="button_delete" data-confirm="Are you sure?" />
+			</div>
+		</form>
+    </body>
+</html>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<sql>
+	<commands>
+		<command id="get-download-data">
+			SELECT
+				id,
+				fk_user_id,
+				details,
+				timestamp_created,
+				ip_address,
+				url
+			FROM user_history
+			WHERE
+				fk_user_id = '#id#'
+				AND(
+					IF(LENGTH('#details#') = 0, 1=1, details LIKE '%#details#%')
+				)
+				AND(
+					IF('#_date_from_#' = '0000-00-00', 1=1, timestamp_created BETWEEN '#_date_from_# 00:00:00' AND '#_date_to_# 23:59:59')
+				)
+			ORDER BY timestamp_created DESC
+		</command>
+		<command id="delete-user-history">
+			DELETE FROM user_history
+			WHERE
+				fk_user_id = '#id#'
+				AND(
+					IF(LENGTH('#details#') = 0, 1=1, details LIKE '%#details#%')
+				)
+				AND(
+					IF('#_date_from_#' = '0000-00-00', 1=1, timestamp_created BETWEEN '#_date_from_# 00:00:00' AND '#_date_to_# 23:59:59')
+				)
+		</command>
+		<command id="get-records">
+			SELECT SQL_CALC_FOUND_ROWS
+				id AS history_id,
+				fk_user_id,
+				details,
+				timestamp_created,
+				ip_address,
+				url
+			FROM user_history
+			WHERE
+				fk_user_id = '#id#'
+				AND(
+					IF(LENGTH('#details#') = 0, 1=1, details LIKE '%#details#%')
+				)
+				AND(
+					IF('#_date_from_#' = '0000-00-00', 1=1, timestamp_created BETWEEN '#_date_from_# 00:00:00' AND '#_date_to_# 23:59:59')
+				)
+			ORDER BY timestamp_created DESC
+			LIMIT #_limit_#
+		</command>
+	</commands>
+</sql>

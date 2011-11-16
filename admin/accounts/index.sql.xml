@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<sql>
+	<commands>
+		<command id="get-records">
+			SELECT SQL_CALC_FOUND_ROWS
+				account.id,
+				account.name_first,
+				account.name_last,
+				user.id AS user_id,
+				user.is_active,
+				user.username,
+				user.email,
+				CONCAT('admin/accounts/add-edit.html?id=', account.id) AS url
+			FROM
+				account
+				LEFT JOIN user ON user.id = account.fk_user_id
+			WHERE
+				1=1 
+				AND(
+					IF(LENGTH('#is_active#') = 0, 1=1, user.is_active = '#is_active#')
+				)
+				AND(
+					IF(LENGTH('#username#') = 0, 1=1, user.username LIKE '%#username#%')
+				)
+			GROUP BY account.id
+			ORDER BY account.id ASC
+			LIMIT #_limit_#
+		</command>
+	</commands>
+</sql>

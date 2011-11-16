@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<?xml-stylesheet type="text/xml" href="_THEME/admin/page.xsl"?>
+<html>
+    <head>
+        <title>Admin Details</title>
+        <meta name="require-session" />
+        <meta name="permission-id" content="1002" />
+        <script language="php" src="admin/administrators/helpers.php" type="text/php"></script>
+    </head>
+    <body>
+        <div xslt-region="nav-trail">
+        	<div class="well">
+	       		<h3><a href="admin/administrators/index.html">Administrators</a> &#8594; Details</h3>
+	       	</div>
+       	</div>
+       	
+		<div xslt-region="sub-tabs"><!--xslt-include href="../../admin/administrators/tabs.html"--></div>
+		
+		<div class="row">
+			<div class="span11 column">
+				<span class="footprint_msg">footprint_msg</span>
+				<form action="" method="post" data-bind-form="get-record" data-bind-form-context="add-update-delete">
+					<fieldset>
+						<legend>User Information</legend>
+						<div class="clearfix">
+							<label for="is_active">Is Active:</label>
+							<div class="input">
+		                        <select size="1" data-bind-input="is_active" name="is_active">
+		                            <option value="yes">yes</option>
+		                            <option value="no">no</option>
+		                        </select>
+								<span class="help-inline"></span>
+							</div>
+						</div>
+						<div class="clearfix">
+							<label for="username">Username:</label>
+							<div class="input">
+								<input type="text" data-bind-input="username" maxlength="45" size="20" name="username" />
+								<span class="help-inline"></span>
+							</div>
+						</div>
+						<div class="clearfix">
+							<label for="email">Email:</label>
+							<div class="input">
+								<input type="text" data-bind-input="email" maxlength="128" size="40" name="email" />
+								<span class="help-inline"></span>
+							</div>
+						</div>
+						<div class="clearfix">
+							<label for="timezone">Timezone:</label>
+							<div class="input">
+								<select name="timezone" data-bind-input="timezone" data-bind-function="H::TimezoneDD" size="1"></select>
+								<span class="help-inline"></span>
+							</div>
+						</div>
+						<div class="clearfix">
+							<label for="password">Password:</label>
+							<div class="input">
+								<input type="password" data-bind-input="password" maxlength="40" size="15" name="password" />
+								<span class="help-inline"></span>
+							</div>
+						</div>
+						<div class="clearfix">
+							<label for="password_confirm">Confirm Password:</label>
+							<div class="input">
+								<input type="password" data-bind-input="password_confirm" maxlength="40" size="15" name="password_confirm" />
+								<span class="help-inline"></span>
+								<div>leave both password fields empty to keep the existing password.</div>
+							</div>
+						</div>
+					</fieldset>
+					<fieldset>
+						<legend>Account Details</legend>
+						<div class="clearfix">
+							<label for="name_first">First Name:</label>
+							<div class="input">
+								<input type="text" value="" maxlength="90" size="25" name="name_first" data-bind-input="name_first" />
+								<span class="help-inline"></span>
+							</div>
+						</div>
+						<div class="clearfix">
+							<label for="name_last">Last Name:</label>
+							<div class="input">
+								<input type="text" value="" maxlength="90" size="25" name="name_last" data-bind-input="name_last" />
+								<span class="help-inline"></span>
+							</div>
+						</div>
+					</fieldset>
+					<div class="actions">
+                        <input class="btn primary" type="submit" value="Create New" name="action" id="button_new" />
+                        <input class="btn primary" type="submit" value="Update" name="action" id="button_update" />
+                        <input class="btn danger" type="submit" value="Delete" name="action" id="button_delete" data-confirm="Are you sure?" />
+					</div>
+				</form>
+			</div>
+			<div class="span5 column">
+				<div class="admin-notes" data-section="notes" data-notes-pivot="administrator" data-bind-attr="data-notes-id=id"></div>
+			</div>
+		</div>
+    </body>
+</html>

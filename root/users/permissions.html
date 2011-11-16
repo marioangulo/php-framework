@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<?xml-stylesheet type="text/xml" href="_THEME/root/page.xsl"?>
+<html>
+    <head>
+        <title>User Permissions</title>
+        <meta name="require-session" />
+        <meta name="permission-id" content="1001" />
+        <script language="php" src="root/users/helpers.php" type="text/php"></script>
+    </head>
+    <body>
+        <div xslt-region="nav-trail">
+        	<div class="well">
+	       		<h3><a href="root/users/index.html">Users</a> &#8594; <a data-bind-attr="href=details_url">Details</a> &#8594; <span data-bind-text="username">---</span></h3>
+	       	</div>
+       	</div>
+       	
+        <div xslt-region="sub-tabs"><!--xslt-include href="../../root/users/tabs.html"--></div>
+        
+		<div class="row">
+			<div class="span11 column">
+				<span class="footprint_msg">footprint_msg</span>
+				<form action="" method="post">
+					<fieldset>
+						<legend>Security Settings</legend>
+						<div class="clearfix">
+							<div data-bind-function="P::GetPermissions">permissions</div>
+						</div>
+					</fieldset>
+					<div class="actions">
+                        <input class="btn primary" type="submit" id="button_update" name="action" value="Update" />
+                        <input class="btn danger" type="submit" id="button_delete" data-confirm="Are you sure?" name="action" value="Delete All" />
+					</div>
+				</form>
+			</div>
+			<div class="span5 column">
+				<div class="highlight">
+					<p>If a security name is <span class="group_permitted">GREEN</span> then this user is granted access from an active group memebership.</p>
+					<p>This does not include the "Root" group members, which are granted access 100% of the time.</p>
+				</div>
+			</div>
+		</div>
+    </body>
+</html>

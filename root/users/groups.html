@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<?xml-stylesheet type="text/xml" href="_THEME/root/page.xsl"?>
+<html>
+    <head>
+        <title>User Group Memberships</title>
+        <meta name="require-session" />
+        <meta name="permission-id" content="1001" />
+        <script language="php" src="root/users/helpers.php" type="text/php"></script>
+    </head>
+    <body>
+        <div xslt-region="nav-trail">
+        	<div class="well">
+	       		<h3><a href="root/users/index.html">Users</a> &#8594; <a data-bind-attr="href=details_url">Details</a> &#8594; <span data-bind-text="username">---</span></h3>
+	       	</div>
+       	</div>
+       	
+        <div xslt-region="sub-tabs"><!--xslt-include href="../../root/users/tabs.html"--></div>
+        
+        <span class="footprint_msg">footprint_msg</span>
+        
+		<div class="row">
+			<div class="span11 column">
+				<div data-bind-results="get-records" data-bind-paging="true">
+			        <table class="zebra-striped">
+			        	<thead class="highlight">
+				            <tr>
+				                <th>Group</th>
+				                <th>Is Default</th>
+				                <th>Membership Lasted</th>
+				                <th>&#160;</th>
+				            </tr>
+						</thead>
+						<tbody>
+				            <tr data-label="blank-row" data-bind-function="P::RowHandler">
+				                <form action="" method="post" name="form">
+				                    <td data-bind-text="group_name" class="stretch">group_name</td>
+				                    <td>
+				                        <div>
+					                        <input data-bind-input="is_default" type="radio" value="yes" name="is_default" /> yes
+					                    </div>
+					                    <div>
+					                        <input data-bind-input="is_default" type="radio" value="no" name="is_default" /> no
+										</div>
+				                    </td>
+				                    <td class="no-wrap">
+					                    <div>From: <span data-bind-text="timestamp_created">timestamp_created</span></div>
+					                    <div>To: <span data-bind-text="timestamp_cancelled">timestamp_cancelled</span></div>
+				                    </td>
+				                    <td class="no-wrap">
+				                        <input class="button_update btn primary" type="submit" value="Update" name="action" />
+				                        <input class="button_cancel btn danger" data-confirm="Are you sure?" type="submit" value="Cancel" name="action" />
+				                        <input data-bind-input="fk_membership_id" type="hidden" name="fk_membership_id" />
+				                    </td>
+				                </form>
+				            </tr>
+				            <tr data-label="no-results-row">
+				                <td colspan="5">No records matched your query.</td>
+				            </tr>
+						</tbody>
+			        </table>
+		        </div>
+			</div>
+			<div class="span5 column">
+		       	<div class="puffy-box">
+					<form class="form-stacked" method="post" action="">
+						<fieldset>
+							<div class="clearfix">
+								<label for="fk_group_id">Add user to group:</label>
+								<div class="input">
+			                        <select size="1" name="fk_group_id" data-bind-function="H::GroupDD"></select> 
+			                        <input class="btn" type="submit" value="Add" name="action" />
+								</div>
+							</div>
+						</fieldset>
+			        </form>
+		        </div>
+			</div>
+		</div>
+    </body>
+</html>

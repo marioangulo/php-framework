@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<?xml-stylesheet type="text/xml" href="_THEME/root/page.xsl"?>
+<html>
+    <head>
+        <title>Errors</title>
+        <meta name="require-session" />
+        <meta name="permission-id" content="1001" />
+    </head>
+    <body>
+        <div xslt-region="nav-trail">
+        	<div class="well">
+		        <div class="float-right">
+		        	<a id="button_download" class="btn info" data-bind-attr="href=button_download">Download Results</a>
+		        	<a id="button_delete" class="btn danger" data-bind-attr="href=button_delete" data-confirm="Are you sure?">Delete Results</a>
+	    	    </div>
+	       		<h3>Errors</h3>
+	       	</div>
+       	</div>
+        
+       	<div class="well filters">
+			<form action="">
+			    <table>
+		        	<thead>
+			            <tr>
+			                <th>Error ID</th>
+			                <th>Details Search</th>
+			                <th>Date Range</th>
+			                <th>Show Rows</th>
+			                <th></th>
+			            </tr>
+					</thead>
+					<tbody>
+			            <tr>
+			                <td>
+			                	<input data-bind-input="id" id="id" type="text" value="" maxlength="11" size="5" name="id" />
+			                </td>
+			                <td>
+			                	<input type="text" name="details" data-bind-input="details" value="" maxlength="45" size="20"/>
+			                </td>
+			                <td>
+			                	<input type="text" name="date_from" data-bind-input="date_from" data-date-picker="true" value="" maxlength="12" size="11"/> to <input type="text" name="date_to" data-bind-input="date_to" data-date-picker="true" value="" maxlength="12" size="11"/>
+			                </td>
+			                <td>
+			                    <select size="1" name="show_rows" data-bind-input="show_rows">
+			                        <option value="20">20</option>
+			                        <option value="30">30</option>
+			                        <option value="40">40</option>
+			                        <option value="50">50</option>
+			                        <option value="75">75</option>
+			                        <option value="100">100</option>
+			                    </select>
+			                </td>
+			                <td>
+								<input class="btn" type="submit" value="Filter" name="filter" />
+			                </td>
+			            </tr>
+			        </tbody>
+				</table>
+	        </form>
+        </div>
+		
+		<div data-bind-results="get-records" data-bind-paging="true">
+	        <table class="zebra-striped">
+	        	<thead class="highlight">
+		            <tr>
+		                <th>&#160;</th>
+		                <th>ID</th>
+		                <th>Time</th>
+		                <th>Error Message</th>
+		            </tr>
+		        </thead>
+		        <tbody>
+		            <tr data-label="blank-row" data-bind-function="P::RowHandler">
+		                <td><a data-bind-attr="href=url" class="btn">Details</a></td>
+		                <td data-bind-text="error_id">error_id</td>
+		                <td data-label="date_time">
+		                    <span data-label="date">date</span>
+		                    <br />
+		                    <span data-label="time">time</span>
+		                </td>
+		                <td data-bind-text="error_message">error_message</td>
+		            </tr>
+		            <tr data-label="no-results-row">
+		                <td colspan="4">No records matched your query.</td>
+		            </tr>
+				</tbody>
+	        </table>
+	        <!--xslt-include href="../../_LIB/footprint/paging-table.html"-->
+		</div>
+    </body>
+</html>

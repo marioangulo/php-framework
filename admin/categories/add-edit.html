@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<?xml-stylesheet type="text/xml" href="_THEME/admin/page.xsl"?>
+<html>
+    <head>
+        <title>Category Details</title>
+        <meta name="require-session" />
+        <meta name="permission-id" content="1002" />
+        <script language="php" src="admin/categories/helpers.php" type="text/php"></script>
+    </head>
+    <body>
+        <div xslt-region="nav-trail">
+        	<div class="well">
+	       		<h3><a href="admin/categories/index.html">Categories</a> &#8594; Details</h3>
+	       	</div>
+       	</div>
+       	
+		<div xslt-region="sub-tabs"><!--xslt-include href="../../admin/categories/tabs.html"--></div>
+		
+		<span class="footprint_msg">footprint_msg</span>
+		<form action="" method="post" data-bind-form="get-record" data-bind-form-context="add-update-delete">
+			<fieldset>
+				<div class="clearfix">
+					<label for="is_active">Is Active:</label>
+					<div class="input">
+                        <select size="1" data-bind-input="is_active" name="is_active">
+                            <option value="yes">yes</option>
+                            <option value="no">no</option>
+                        </select>
+						<span class="help-inline"></span>
+					</div>
+				</div>
+				<div class="clearfix">
+					<label for="fk_pivot_table">Pivot Table:</label>
+					<div class="input">
+                        <select size="1" name="fk_pivot_table" data-bind-input="fk_pivot_table" data-bind-function="H::PivotTableDD"></select>
+						<span class="help-inline"></span>
+					</div>
+				</div>
+				<div class="clearfix">
+					<label for="name">Name:</label>
+					<div class="input">
+						<input type="text" value="" maxlength="255" size="25" name="name" data-bind-input="name" />
+						<span class="help-inline"></span>
+					</div>
+				</div>
+			</fieldset>
+			<div class="actions">
+                <input class="btn primary" type="submit" value="Create New" name="action" id="button_new" />
+                <input class="btn primary" type="submit" value="Update" name="action" id="button_update" />
+                <input class="btn danger" type="submit" value="Delete" name="action" id="button_delete" data-confirm="Are you sure?" />
+			</div>
+		</form>
+    </body>
+</html>

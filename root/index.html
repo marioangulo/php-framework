@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<?xml-stylesheet type="text/xml" href="_THEME/root/page.xsl"?>
+<html>
+    <head>
+        <title>Root</title>
+        <meta name="require-session" />
+        <meta name="permission-id" content="1001" />
+    </head>
+    <body>
+		<div class="row stats">
+			<div class="span4 column stat">
+				<div class="well">
+					<h1 data-bind-text="sql:total-user-count">---</h1>
+		            <div class="title">Users</div>
+				</div>
+			</div>
+			<div class="span4 column stat">
+				<div class="well">
+					<h1 data-bind-text="sql:total-group-count">---</h1>
+		            <div class="title">Groups</div>
+				</div>
+			</div>
+			<div class="span4 column stat">
+				<div class="well">
+					<h1 data-bind-text="sql:total-history-count">---</h1>
+		            <div class="title">History Logs</div>
+				</div>
+			</div>
+			<div class="span4 column stat">
+				<div class="well">
+					<h1 data-bind-text="sql:total-error-count">---</h1>
+		            <div class="title">Errors [<em>since <span data-bind-text="sql:date-of-oldest-error">---</span></em>]</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<!--left-column-->
+			<div class="span-two-thirds column">
+            	<div class="well">
+					<div class="page-header">
+						<h2>Users &amp; Groups <small>This is the user system (it's a big deal).</small></h2>
+					</div>
+	            	<h3><a href="root/users/index.html">Users</a></h3>
+            		<p>You may grant users membership to groups. You may grant security permissions to users granularly to override the settings found in the users' group permissions.</p>
+                	<pre>[1] If a group has permission to a security setting then any user who is a current member of that group also has permission.</pre>
+                	<pre>[2] If you need a user to be a member of a group but don't want the user to have a specific permission that the group does has permission to, you may deny access to the user individually from the user details > permissions screen.</pre>
+	            	
+	            	<h3><a href="root/groups/index.html">User Groups</a></h3>
+            		<p>What you'll do most of the time is grant permissions to user groups. The users in a group will inherit the group's permission settings.</p>
+	            	
+	            	<h3><a href="root/group-categories/index.html">Group Categories</a></h3>
+            		<p>It also helps to organize your groups into categories. For example you could have an "employee" category and use the different groups in that category as the departments of a company.</p>
+				</div>
+				
+            	<div class="well">
+					<div class="page-header">
+						<h2>Permission &amp; Access <small>How we let the right one's in.</small></h2>
+					</div>
+	            	<h3><a href="root/security/index.html">Security Settings</a></h3>
+            		<p>Security settings are an important part of Footprint. Developers who work on the application will be the ones who put the security settings into place.</p>
+                	<pre>[1] Deleting or modifying these settings could cause irreversible damage or a lot of headaches for the developer. You've been warned.</pre>
+            		
+	            	<h3><a href="root/ip-access/index.html">IP Access</a></h3>
+            		<p>This area allows you to add trusted IP addresses to the application. All other IP addresses will be denied access (when using "require-session"). This is a great feature for organizations that don't want users logging in from outside a specific location.</p>
+                	<pre>[1] Don't forget about the "May Skip IP Check" security setting! Some web applications have users logging in from unknown locations, and that's ok.  Just grant this permission to groups or users who should skip IP address validation.</pre>
+				</div>
+				
+            	<div class="well">
+					<div class="page-header">
+						<h2>System Logs <small>Keeping track of stuff that happened.</small></h2>
+					</div>
+	            	<h3><a href="root/user-history/index.html">User History</a></h3>
+            		<p>Developers of the application install history log functions for certain actions and/or events users make. After installed they generated logs can be found here.</p>
+            		<h3><a href="root/errors/index.html">Errors</a></h3>
+            		<p>If error logging is turned on, you can view all errors that the system was able to catch. You can search, view, download and delete these error logs. See lots of debug information such as HTTP GET, HTTP POST, Session, Cookie and other <a href="root/environment/index.html">environment</a> data.</p>
+				</div>
+			</div>
+			<!--right-column-->
+			<div class="span-one-third column">
+                <table>
+                	<thead class="highlight">
+	                    <tr>
+	                        <th>Most Active Users</th>
+	                    </tr>
+                	</thead>
+                	<tbody data-bind-results="most-active-users">
+	                    <tr data-label="blank-row">
+	                    	<td>
+				                <div>@<a data-bind-attr="href=url" data-bind-text="username">username</a> has <span data-bind-text="total_count">total_count</span> entries</div>
+	                        </td>
+	                    </tr>
+					</tbody>
+					<thead class="highlight">
+	                    <tr>
+	                        <th>Recent Activity</th>
+	                    </tr>
+					</thead>
+					<tbody data-bind-results="recent-activity">
+	                    <tr data-label="blank-row">
+	                        <td>
+			                	<strong data-bind-text="seconds_ago" data-time-ago="1">---</strong> @<a data-bind-attr="href=url" data-bind-text="username">---</a>
+				                <div colspan="2" data-bind-text="details">---</div>
+	                        </td>
+	                    </tr>
+					</tbody>
+					<thead class="highlight">
+	                    <tr>
+	                        <th>Recent Errors</th>
+	                    </tr>
+					</thead>
+					<tbody data-bind-results="recent-errors">
+	                    <tr data-label="blank-row">
+	                        <td>
+				                <div>
+					                <strong data-bind-text="seconds_ago" data-time-ago="1">---</strong> - 
+					                <span colspan="2" data-bind-text="error_message">---</span> 
+					                <a data-bind-attr="href=url">See Details</a>
+				                </div>
+	                        </td>
+	                    </tr>
+					</tbody>
+                </table>
+			</div>
+		</div>
+    </body>
+</html>

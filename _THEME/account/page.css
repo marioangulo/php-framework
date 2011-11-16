@@ -1,0 +1,20 @@
+/* web fonts */
+	@import url(https://fonts.googleapis.com/css?family=Lato:900);
+	
+/* general styles */
+	html,body {
+		height: 100%;
+	}
+	body {
+		background: transparent url(../../_THEME/common/media/grid-18px.png) top center;
+		background-color: #049cd9;
+	}
+	
+	.ajax-running {
+		display: none;
+		float: left;
+		height: 22px;
+	}
+	.ajax-running img {
+		margin-top: 11px;
+	}

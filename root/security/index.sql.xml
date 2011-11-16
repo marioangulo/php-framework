@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<sql>
+	<commands>
+		<command id="get-records">
+			SELECT 
+				user_security.id AS id,
+				user_security.dk_id_parent,
+				user_security.name,
+				user_security.description,
+				COUNT(user_security2.id) AS children_count,
+				CONCAT('root/security/add-edit.html?id=', user_security.id) AS url,
+				CONCAT('root/security/index.html?dk_id_parent=', user_security.id) AS dive_url
+			FROM
+				user_security
+				LEFT JOIN user_security AS user_security2 ON user_security2.dk_id_parent = user_security.id
+			WHERE
+				user_security.id > 0
+				AND(
+					IF(LENGTH('#dk_id_parent#') = 0, user_security.dk_id_parent = '0', user_security.dk_id_parent = '#dk_id_parent#')
+				)
+			GROUP BY user_security.id
+			ORDER BY user_security.name ASC
+		</command>
+	</commands>
+</sql>

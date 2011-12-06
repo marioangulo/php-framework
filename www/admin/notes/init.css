@@ -1,0 +1,49 @@
+/**
+* note styles
+*/
+.admin-notes {
+}
+.admin-notes form {
+    margin-bottom: 0px;
+}
+.admin-notes form fieldset {
+    margin-bottom: 0px;
+}
+.admin-notes .note-btn {
+    position: relative;
+}
+.admin-notes .note-btn a {
+    top: -35px;
+    right: 7px;
+    position: absolute;
+}
+
+.admin-notes .note {
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+    padding: 12px;
+    background-color: #f3f3f3;
+}
+.admin-notes .note .note-data {
+    font-size: 0.95em;
+    line-height: normal !important;
+    margin-bottom: 5px;
+}
+.admin-notes .note .signature {
+    font-size: 0.85em;
+    color: #666;
+    float: right;
+    
+    padding: 3px;
+    padding-left: 10px;
+    padding-right: 10px;
+    
+    border: 1px solid #ccc;
+    
+    -webkit-border-radius: 12px;
+    -moz-border-radius: 12px;
+    
+    background: #fff;
+}
+

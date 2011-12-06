@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<sql>
+    <commands>
+        <command id="duplicate-name-check">
+            SELECT name
+            FROM user_security
+            WHERE
+                name = '#name#'
+                AND NOT user_security.id = '#id#'
+                AND user_security.dk_id_parent = '#dk_id_parent#'
+        </command>
+        <command id="create-new">
+            INSERT INTO user_security
+            SET
+                dk_id_parent = IF('#dk_id_parent#' = '', '0', '#dk_id_parent#'),
+                name = '#name#',
+                description = '#description#'
+        </command>
+        <command id="update">
+            UPDATE user_security
+            SET
+                name = '#name#',
+                description = '#description#'
+            WHERE id = '#id#'
+        </command>
+        <command id="delete-permissions">
+            DELETE FROM user_permission WHERE fk_security_id = '#id#'
+        </command>
+        <command id="delete-security">
+            DELETE FROM user_security WHERE id = '#id#'
+            ;
+        </command>
+        <command id="get-record">
+            SELECT
+                name,
+                description
+            FROM user_security
+            WHERE id = '#id#'
+        </command>
+    </commands>
+</sql>

@@ -1,0 +1,29 @@
+/**
+ * import resources
+ */
+@import url(http://fonts.googleapis.com/css?family=Lato:900);
+@import url(../common/jquery/jquery-ui-1.8.16.custom.css);
+@import url(../common/bootstrap.min.css);
+@import url(../common/page.css);
+@import url(../common/utility.css);
+@import url(../../admin/notes/init.css);
+
+/**
+ * misc styles
+ */
+html,
+body {
+    height: 100%;
+}
+
+/**
+ * ajax styles
+ */
+.ajax-running {
+    display: none;
+    float: left;
+    height: 22px;
+}
+.ajax-running img {
+    margin-top: 11px;
+}

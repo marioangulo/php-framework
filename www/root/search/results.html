@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Root Search</title>
+        <meta name="require-session" />
+        <meta name="permission-id" content="1001" />
+    </head>
+    <body data-section="global_search_results">
+        <ul data-bind-results="results-users">
+            <li class="group">Users (<span data-bind-text="results-users-found-rows">0</span>)</li>
+            <li class="divider"></li>
+            <li class="unselected" data-label="blank-row" data-row="true">
+                <a data-bind-attr="href=url" data-bind-text="name">name</a>
+            </li>
+        </ul>
+        <ul data-bind-results="results-groups">
+            <li class="group">Groups (<span data-bind-text="results-groups-found-rows">0</span>)</li>
+            <li class="divider"></li>
+            <li class="unselected" data-label="blank-row" data-row="true">
+                <a data-bind-attr="href=url" data-bind-text="name">name</a>
+            </li>
+        </ul>
+        <ul data-bind-results="results-security">
+            <li class="group">Security Settings (<span data-bind-text="results-security-found-rows">0</span>)</li>
+            <li class="divider"></li>
+            <li class="unselected" data-label="blank-row" data-row="true">
+                <a data-bind-attr="href=url" data-bind-text="name">name</a>
+            </li>
+        </ul>
+        <ul data-bind-results="results-navigation">
+            <li class="group">Navigation (<span data-bind-text="results-navigation-found-rows">0</span>)</li>
+            <li class="divider"></li>
+            <li class="unselected" data-label="blank-row" data-row="true">
+                <a data-bind-attr="href=url" data-bind-text="name">name</a>
+            </li>
+        </ul>
+    </body>
+</html>

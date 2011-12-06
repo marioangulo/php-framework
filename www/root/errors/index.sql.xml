@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<sql>
+    <commands>
+        <command id="get-download-data">
+            SELECT 
+                id,
+                application,
+                source,
+                error_message,
+                request_get,
+                request_post,
+                request_session,
+                request_cookie,
+                environment_variables,
+                timestamp_created
+            FROM error
+            WHERE
+                error.id > 0
+                AND(
+                    IF(LENGTH('#id#') = 0, 1=1, error.id = '#id#')
+                )
+                AND(
+                    IF(LENGTH('#details#') = 0, 1=1, error.error_message LIKE '%#details#%')
+                )
+                AND(
+                    IF('#_date_from_#' = '0000-00-00', 1=1, timestamp_created BETWEEN '#_date_from_# 00:00:00' AND '#_date_to_# 23:59:59')
+                )
+        </command>
+        <command id="delete-records">
+            DELETE FROM error
+            WHERE
+                error.id > 0
+                AND(
+                    IF(LENGTH('#id#') = 0, 1=1, error.id = '#id#')
+                )
+                AND(
+                    IF(LENGTH('#details#') = 0, 1=1, error.error_message LIKE '%#details#%')
+                )
+                AND(
+                    IF('#_date_from_#' = '0000-00-00', 1=1, error.timestamp_created BETWEEN '#_date_from_# 00:00:00' AND '#_date_to_# 23:59:59')
+                )
+        </command>
+        <command id="get-records">
+            SELECT SQL_CALC_FOUND_ROWS
+                id AS error_id,
+                error_message,
+                timestamp_created,
+                CONCAT('root/errors/details.html?id=', id) AS url
+            FROM error
+            WHERE
+                error.id > 0
+                AND(
+                    IF(LENGTH('#id#') = 0, 1=1, error.id = '#id#')
+                )
+                AND(
+                    IF(LENGTH('#details#') = 0, 1=1, error.error_message LIKE '%#details#%')
+                )
+                AND(
+                    IF('#_date_from_#' = '0000-00-00', 1=1, timestamp_created BETWEEN '#_date_from_# 00:00:00' AND '#_date_to_# 23:59:59')
+                )
+            ORDER BY timestamp_created DESC
+            LIMIT #_limit_#
+        </command>
+    </commands>
+</sql>

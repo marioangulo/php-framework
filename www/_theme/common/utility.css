@@ -1,0 +1,315 @@
+/**
+ * floats, alignment, stretching and clearing
+ */
+.float-right {
+    float: right;
+}
+.float-left {
+    float: left;
+}
+.align-center {
+    text-align: center;
+}
+.align-right {
+    text-align: right;
+}
+.center-left {
+    text-align: left;
+}
+.stretch {
+    width: 100%;
+}
+input.stretch, 
+textarea.stretch,
+select.stretch {
+    box-sizing: border-box;
+}
+input.stretch {
+    height: 27px;
+}
+.no-wrap {
+    white-space: nowrap;
+}
+.clear {
+    clear: both;
+}
+
+/**
+ * tab styles
+ */
+.tabs a.disabled {
+    color: #999;
+    text-decoration: line-through;
+}
+
+/**
+ * tables
+ */
+table td,
+table th {
+    vertical-align: top;
+}
+table td pre {
+    margin-bottom: 0px;
+}
+
+table.even-two th,
+table.even-two td {
+    width: 50%;
+}
+table.even-three th,
+table.even-three td {
+    width: 33%;
+}
+table.even-three th,
+table.even-four td {
+    width: 25%;
+}
+table.even-three th,
+table.even-five td {
+    width: 20%;
+}
+table.one-third-two-thirds th:first-child,
+table.one-third-two-thirds td:first-child {
+    width: 33%;
+}
+table.one-third-two-thirds th:last-child,
+table.one-third-two-thirds td:last-child {
+    width: 66%;
+}
+table.two-thirds-one-third th:first-child,
+table.two-thirds-one-third td:first-child {
+    width: 66%;
+}
+table.two-thirds-one-third th:last-child,
+table.two-thirds-one-third td:last-child {
+    width: 33%;
+}
+
+thead.lightbg tr th {
+    background-color: #eee;
+}
+
+table.align-center th,
+table.align-center td {
+    text-align: center;
+}
+
+thead.highlight tr th {
+    white-space: nowrap;
+    color: #eee;
+    padding: 12px;
+    border: none;
+    background-image: -khtml-gradient(linear, left top, left bottom, from(#666), to(#222));
+    background-image: -moz-linear-gradient(top, #666, #222);
+    background-image: -ms-linear-gradient(top, #666, #222);
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #666), color-stop(100%, #222));
+    background-image: -webkit-linear-gradient(top, #666, #222);
+    background-image: -o-linear-gradient(top, #666, #222);
+    background-image: linear-gradient(top, #666, #222);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#666', endColorstr='#222', GradientType=0);
+}
+
+/**
+ * paging styles
+ */
+.well .pagination {
+    margin-top: 0px;
+    margin-bottom: 10px;
+}
+.well .pagination li a {
+    background-color: #fff;
+}
+.well .pagination li a:hover {
+    background-color: #eee;
+}
+.well .pagination li.disabled a:hover {
+    background-color: #fff;
+}
+.well .pagination li.active a {
+    background-color: #C7EEFE;
+}
+
+.pagination {
+    text-align: center;
+}
+.paging-stats {
+}
+
+.data-paging-ajax {
+    border: none;
+}
+.data-paging-ajax td {
+    padding: 0px;
+    border: none;
+}
+.data-paging-ajax .left {
+}
+.data-paging-ajax .center {
+    line-height: 30px;
+    text-align: center;
+    width: 100%;
+}
+.data-paging-ajax .right {
+    white-space: nowrap;
+}
+.data-paging-ajax .pagination {
+    margin-bottom: 0px;
+}
+
+/**
+ * form fixes
+ */
+input, textarea, select {
+  width: auto;
+}
+
+/**
+ * global search
+ */
+.global-search-results {
+    -webkit-border-bottom-left-radius: 5px;
+    -moz-border-radius-bottomleft: 5px;
+    -webkit-border-bottom-right-radius: 5px;
+    -moz-border-radius-bottomright: 5px;
+    
+    background-color: #191919;
+    background-repeat: repeat-x;
+    background-image: -khtml-gradient(linear, left top, left bottom, from(#292929), to(#191919));
+    background-image: -moz-linear-gradient(top, #292929, #191919);
+    background-image: -ms-linear-gradient(top, #292929, #191919);
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #292929), color-stop(100%, #191919));
+    background-image: -webkit-linear-gradient(top, #292929, #191919);
+    background-image: -o-linear-gradient(top, #292929, #191919);
+    background-image: linear-gradient(top, #292929, #191919);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#292929', endColorstr='#191919', GradientType=0);
+    color: #fff;
+}
+.global-search-results ul {
+    width: 300px;
+    max-width: none;
+    padding: 10px;
+}
+.global-search-results ul li.selected {
+    color: #fff;
+    background-color: #000;
+}
+.global-search-results ul li.group {
+    margin-top: 10px;
+}
+.global-search-results ul li.group:first-child {
+    margin-top: 0px;
+}
+
+/**
+ * extra button handling
+ */
+.btn + .btn {
+    margin-left: 10px;
+}
+input + .btn,
+select + .btn {
+    margin-left: 10px;
+}
+
+/**
+ * fieldset fix
+ */
+form fieldset legend {
+    box-sizing: border-box;
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-left: 0px;
+    border-bottom: 1px solid #ccc;
+}
+
+
+/**
+ * headings and paragraphs
+ */
+h3, h4, h5, h6 {
+    line-height: normal;
+}
+
+h3 + blockquote,
+h4 + blockquote,
+h5 + blockquote,
+h6 + blockquote {
+    margin-top: 10px;
+}
+
+p + h3, 
+p + h4, 
+p + h5, 
+p + h6 {
+    margin-top: 10px;
+}
+
+/**
+ * pre styles
+ */
+pre + pre {
+    margin-top: 10px;
+}
+p + pre {
+    margin-top: 10px;
+}
+
+/**
+ * well styles
+ */
+.well pre {
+    background-color: #fff;
+}
+.well pre {
+    background-color: #fff;
+}
+.well blockquote:last-child {
+    margin-bottom: 0px;
+}
+.well pre:last-child {
+    margin-bottom: 0px;
+}
+
+.well form {
+    margin-bottom: 0px;
+}
+
+div.well table {
+    margin-bottom: 0px;
+}
+
+/**
+ * record filters
+ */
+div.filters table {
+    margin-bottom: 0px;
+    border: none;
+}
+div.filters table td {
+    border: none;
+}
+div.filters table th {
+    border: none;
+    border-bottom: 1px solid #ccc;
+}
+div.filters table thead tr:first-child th {
+    padding-top: 0px;
+}
+div.filters table thead tr th:first-child {
+    padding-left: 0px;
+}
+div.filters table thead tr th:last-child {
+    padding-right: 0px;
+}
+div.filters table tbody tr:first-child td {
+    border-bottom: 0px;
+    padding-bottom: 0px;
+}
+div.filters table tbody tr td:first-child {
+    padding-left: 0px;
+}
+div.filters table tbody tr td:last-child {
+    padding-right: 0px;
+}

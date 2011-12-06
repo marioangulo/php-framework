@@ -1,0 +1,18 @@
+/**
+ * page styles
+ */
+.time-today {
+    font-weight: bold;
+    white-space: nowrap;
+    color: #ff0000;
+}
+.time-yesterday {
+    font-weight: bold;
+    white-space: nowrap;
+    color: #ff9900;
+}
+.time-past {
+    font-weight: bold;
+    white-space: nowrap;
+    color: #3366cc;
+}

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<sql>
+<commands>
+    <command id="duplicate-username-check">
+        SELECT username
+        FROM user
+        WHERE
+            username = '#username#'
+            AND NOT user.id = '#id#'
+    </command>
+    <command id="duplicate-email-check">
+        SELECT username
+        FROM user
+        WHERE
+            email = '#email#'
+            AND NOT user.id = '#id#'
+    </command>
+    <command id="create-new-user">
+        INSERT INTO user
+        SET
+            is_active = '#is_active#',
+            username = '#username#',
+            email = '#email#',
+            timezone = '#timezone#',
+            password = MD5('#password#')
+    </command>
+    <command id="update-user">
+        UPDATE user
+        SET
+            is_active = '#is_active#',
+            username = '#username#',
+            email = '#email#',
+            timezone = '#timezone#',
+            password = IF(LENGTH('#password#') = 0, password, MD5('#password#'))
+        WHERE user.id = '#id#'
+    </command>
+    <command id="delete-user">
+        DELETE FROM user WHERE user.id = '#id#'
+    </command>
+    <command id="delete-permissions">
+        DELETE FROM user_permission WHERE fk_user_id = '#id#'
+    </command>
+    <command id="delete-membership">
+        DELETE FROM user_membership WHERE fk_user_id = '#id#'
+    </command>
+    <command id="delete-history">
+        DELETE FROM user_history WHERE fk_user_id = '#id#'
+    </command>
+    <command id="get-record">
+        SELECT
+            is_active,
+            username,
+            email,
+            timezone
+        FROM user
+        WHERE user.id = '#id#'
+    </command>
+</commands>
+</sql>

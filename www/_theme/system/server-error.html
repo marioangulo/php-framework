@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<?xml-stylesheet type="text/xml" href="_theme/system/template.xsl"?>
+<html>
+    <head>
+        <title>Server Error</title>
+    </head>
+    <body>
+        <div xslt-region="nav-trail">We're sorry, there was a server error!</div>
+        
+        <div class="layout">
+            <h2>Server Error</h2>
+            <p>There was an error with your request. The system administrator has been notified. If the problem persists, please notify <a data-bind-attr="href=mail-to-href" data-bind-text="mail-to-email">---</a>.</p>
+            <p data-label="error-identifier">This error has been logged and can be tracked by <span class="highlight">ErrorID #<span data-bind-text="error-id">---</span></span></p>
+            <p>Thank you,<br /> System Administration</p>
+        </div>
+        
+        <div data-label="stack-trace">
+            <table>
+                <tr>
+                    <td><strong>Error ID:</strong></td>
+                    <td data-bind-text="error-id">---</td>
+                </tr>
+                <tr>
+                    <td><strong>URL:</strong></td>
+                    <td data-bind-text="log:url">---</td>
+                </tr>
+                <tr>
+                    <td><strong>Time:</strong></td>
+                    <td data-bind-text="log:timestamp">---</td>
+                </tr>
+                <tr>
+                    <td><strong>Application:</strong></td>
+                    <td data-bind-text="log:application">---</td>
+                </tr>
+                <tr>
+                    <td><strong>Error Message:</strong></td>
+                    <td data-bind-text="log:error-message">---</td>
+                </tr>
+                <tr>
+                    <td><strong>Source:</strong></td>
+                    <td data-bind-text="log:source">---</td>
+                </tr>
+                <tr>
+                    <td><strong>Debug Log:</strong></td>
+                    <td><pre data-bind-text="log:debug-log">---</pre></td>
+                </tr>
+                <tr>
+                    <td><strong>Stack Trace:</strong></td>
+                    <td><pre data-bind-text="log:stack-trace">---</pre></td>
+                </tr>
+                <tr>
+                    <td><strong>GET Request:</strong></td>
+                    <td><pre data-bind-text="log:http-get">---</pre></td>
+                </tr>
+                <tr>
+                    <td><strong>POST Request: </strong></td>
+                    <td><pre data-bind-text="log:http-post">---</pre></td>
+                </tr>
+                <tr>
+                    <td><strong>Session Request: </strong></td>
+                    <td><pre data-bind-text="log:session">---</pre></td>
+                </tr>
+                <tr>
+                    <td><strong>Cookie Request: </strong></td>
+                    <td><pre data-bind-text="log:cookies">---</pre></td>
+                </tr>
+                <tr>
+                    <td><strong>Environment Variables: </strong></td>
+                    <td><pre data-bind-text="log:environment">---</pre></td>
+                </tr>
+            </table>
+        </div>
+    </body>
+</html>

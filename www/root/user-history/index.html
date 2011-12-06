@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<?xml-stylesheet type="text/xml" href="_theme/root/template.xsl"?>
+<html>
+    <head>
+        <title>User History</title>
+        <meta name="require-session" />
+        <meta name="permission-id" content="1001" />
+    </head>
+    <body>
+        <div xslt-region="nav-trail">
+            <div class="well">
+                <div class="float-right">
+                    <a id="button_download" class="btn info" data-bind-attr="href=button_download">Download Results</a>
+                    <a id="button_delete" class="btn danger" data-bind-attr="href=button_delete" data-confirm="Are you sure?">Delete Results</a>
+                </div>
+                   <h3>Users History</h3>
+               </div>
+           </div>
+        
+           <div class="well filters">
+            <form action="">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Username Search</th>
+                            <th>Details Search</th>
+                            <th>Date Range</th>
+                            <th>Show Rows</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <input type="text" name="username" data-bind-input="username" maxlength="45" size="20" />
+                            </td>
+                            <td>
+                                <input type="text" name="details" data-bind-input="details" value="" maxlength="45" size="20"/>
+                            </td>
+                            <td>
+                                <input type="text" name="date_from" data-bind-input="date_from" data-date-picker="true" value="" maxlength="12" size="11"/> to <input type="text" name="date_to" data-bind-input="date_to" data-date-picker="true" value="" maxlength="12" size="11"/>
+                            </td>
+                            <td>
+                                <select size="1" name="show_rows" data-bind-input="show_rows">
+                                    <option value="20">20</option>
+                                    <option value="30">30</option>
+                                    <option value="40">40</option>
+                                    <option value="50">50</option>
+                                    <option value="75">75</option>
+                                    <option value="100">100</option>
+                                </select>
+                            </td>
+                            <td>
+                                <input class="btn" type="submit" value="Filter" name="filter" />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+        
+        <div data-bind-results="get-records" data-bind-paging="true">
+            <table class="zebra-striped">
+                <thead class="highlight">
+                    <tr>
+                        <th>Time</th>
+                        <th>Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-label="blank-row" data-bind-function="Page::rowHandler">
+                        <td data-label="date_time">
+                            <div data-label="date">date</div>
+                            <div data-label="time">time</div>
+                        </td>
+                        <td class="stretch">
+                            <div>
+                                <b>Username:</b>
+                                @<a data-bind-attr="href=url" data-bind-text="username">username</a>
+                            </div>
+                            <div>
+                                <b>Details:</b>
+                                <span data-bind-text="details">details</span>
+                            </div>
+                            <div>
+                                <b>URL:</b>
+                                <span data-bind-text="url">url</span>
+                            </div>
+                            <div>
+                                <b>IP Address:</b>
+                                <span data-bind-text="ip_address">ip_address</span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr data-label="no-results-row">
+                        <td colspan="2">No records matched your query.</td>
+                    </tr>
+                </tbody>
+            </table>
+            <!--xslt-include href="_theme/system/paging-table.html"-->
+        </div>
+    </body>
+</html>

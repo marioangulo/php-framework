@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<sql>
+    <commands>
+        <command id="create-new">
+            INSERT INTO category
+            SET fk_pivot_table = '#fk_pivot_table#',
+                name = '#name#',
+                is_active = '#is_active#'
+        </command>
+        <command id="duplicate-name-check">
+            SELECT id
+            FROM category
+            WHERE
+                name = '#name#'
+                AND fk_pivot_table = '#fk_pivot_table#'
+                AND NOT id = '#id#'
+        </command>
+        <command id="update">
+            UPDATE category
+            SET fk_pivot_table = '#fk_pivot_table#',
+                name = '#name#',
+                is_active = '#is_active#'
+            WHERE id = '#id#'
+        </command>
+        <command id="delete">
+            DELETE FROM category WHERE id = '#id#'
+        </command>
+        <command id="get-record">
+            SELECT
+                id,
+                fk_pivot_table,
+                name,
+                is_active
+            FROM category
+            WHERE id = '#id#'
+            ORDER BY name ASC
+        </command>
+    </commands>
+</sql>

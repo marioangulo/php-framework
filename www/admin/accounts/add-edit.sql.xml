@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<sql>
+    <commands>
+        <command id="create-new-user">
+            INSERT INTO user
+            SET is_active = '#is_active#',
+                username = '#username#',
+                email = '#email#',
+                timezone = '#timezone#',
+                password = MD5('#password#')
+        </command>
+        <command id="update-user">
+            UPDATE user
+            SET is_active = '#is_active#',
+                username = '#username#',
+                email = '#email#',
+                timezone = '#timezone#',
+                password = IF(LENGTH('#password#') = 0, password, MD5('#password#'))
+            WHERE user.id = '#fk_user_id#'
+        </command>
+        <command id="delete-user">
+            DELETE FROM user WHERE user.id = '#fk_user_id#'
+        </command>
+        <command id="add-to-group">
+            INSERT INTO user_membership
+            SET is_default = 'yes',
+                fk_user_id = '#fk_user_id#',
+                fk_group_id = '3',
+                timestamp_created = '#_now_#'
+        </command>
+        <command id="delete-user-permissions">
+            DELETE FROM user_permission WHERE fk_user_id = '#fk_user_id#'
+        </command>
+        <command id="delete-user-membership">
+            DELETE FROM user_membership WHERE fk_user_id = '#fk_user_id#'
+        </command>
+        <command id="delete-user-history">
+            DELETE FROM user_history WHERE fk_user_id = '#fk_user_id#'
+        </command>
+        <command id="create-new-account">
+            INSERT INTO account
+            SET fk_user_id = '#fk_user_id#',
+                name_first = '#name_first#',
+                name_last = '#name_last#'
+        </command>
+        <command id="update-account">
+            UPDATE account
+            SET name_first = '#name_first#',
+                name_last = '#name_last#'
+            WHERE id = '#id#'
+        </command>
+        <command id="delete-account">
+            DELETE FROM account WHERE id = '#id#'
+        </command>
+        <command id="get-record">
+            SELECT
+                user.id,
+                user.is_active,
+                user.username,
+                user.email,
+                user.timezone,
+                account.name_first,
+                account.name_last
+            FROM
+                account
+                LEFT JOIN user ON user.id = account.fk_user_id
+            WHERE account.id = '#id#'
+        </command>
+    </commands>
+</sql>

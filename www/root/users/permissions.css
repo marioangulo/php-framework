@@ -1,0 +1,42 @@
+/**
+ * page styles
+ */
+.group_permitted {
+    font-weight: bold;
+    color: #339900;
+    background-color: #deffdd;
+}
+.group_restricted {
+    font-weight: normal;
+    color: #333;
+    background-color: #fff;
+}
+.highlight {
+    padding: 10px;
+    background-color: #deffdd;
+    border: 2px solid #339900;
+    
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+ul.security {
+    padding: 0px;
+    margin: 0px;
+    margin-left: 10px;
+}
+ul.security li {
+    padding: 0px;
+    list-style: upper-roman;
+    margin-left: 15px;
+}
+ul.security li ul li {
+    list-style: upper-alpha;
+}
+ul.security li ul li ul li {
+    list-style: square;
+}
+ul.security li ul li ul li ul li {
+    list-style: circle;
+}

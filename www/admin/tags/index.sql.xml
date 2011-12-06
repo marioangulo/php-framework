@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<sql>
+    <commands>
+        <command id="get-records">
+            SELECT SQL_CALC_FOUND_ROWS
+                id,
+                fk_pivot_table,
+                name,
+                CONCAT('admin/tags/add-edit.html?id=', id) AS url
+            FROM tag
+            WHERE
+                1=1
+                AND(
+                    IF(LENGTH('#is_active#') = 0, 1=1, is_active = '#is_active#')
+                )
+                AND(
+                    IF(LENGTH('#fk_pivot_table#') = 0, 1=1, fk_pivot_table = '#fk_pivot_table#')
+                )
+            ORDER BY fk_pivot_table, name
+            LIMIT #_limit_#
+        </command>
+    </commands>
+</sql>

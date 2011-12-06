@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<?xml-stylesheet type="text/xml" href="_theme/root/template.xsl"?>
+<html>
+    <head>
+        <title>User Groups</title>
+        <meta name="require-session" />
+        <meta name="permission-id" content="1001" />
+    </head>
+    <body>
+        <div xslt-region="nav-trail">
+            <div class="well">
+                <div class="float-right">
+                    <a href="root/groups/add-edit.html?id=" class="btn success">Create New</a>
+                </div>
+                <h3>Groups</h3>
+            </div>
+        </div>
+        
+        <div class="well filters">
+            <form action="">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Category</th>
+                            <th>Is Active</th>
+                            <th>Show Rows</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <select size="1" data-bind-input="fk_category_id" name="fk_category_id" data-bind-function="Helpers::categoryDD"></select>
+                            </td>
+                            <td>
+                                <select size="1" name="is_active" data-bind-input="is_active">
+                                    <option value="">--- Any ---</option>
+                                    <option value="yes">yes</option>
+                                    <option value="no">no</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select size="1" name="show_rows" data-bind-input="show_rows">
+                                    <option value="20">20</option>
+                                    <option value="30">30</option>
+                                    <option value="40">40</option>
+                                    <option value="50">50</option>
+                                    <option value="75">75</option>
+                                    <option value="100">100</option>
+                                </select>
+                            </td>
+                            <td>
+                                <input class="btn" type="submit" value="Filter" name="filter" />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+        
+        <div data-bind-results="get-records" data-bind-paging="true">
+            <table class="zebra-striped">
+                <thead class="highlight">
+                    <tr>
+                        <th>&#160;</th>
+                        <th>ID</th>
+                        <th>Category</th>
+                        <th>Active</th>
+                        <th class="stretch">Name / Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-label="blank-row">
+                        <td><a class="btn" data-bind-attr="href=url">Edit</a></td>
+                        <td data-bind-text="id">id</td>
+                        <td data-bind-text="category">category</td>
+                        <td data-bind-text="is_active">is_active</td>
+                        <td>
+                            <strong><span data-bind-text="name">name</span></strong><br />
+                            <span data-bind-text="description">description</span>
+                        </td>
+                    </tr>
+                    <tr data-label="no-results-row">
+                        <td colspan="5">No records matched your query.</td>
+                    </tr>
+                </tbody>
+            </table>
+            <!--xslt-include href="_theme/system/paging-table.html"-->
+        </div>
+    </body>
+</html>

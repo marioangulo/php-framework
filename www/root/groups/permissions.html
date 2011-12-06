@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<?xml-stylesheet type="text/xml" href="_theme/root/template.xsl"?>
+<html>
+    <head>
+        <title>Group Permissions</title>
+        <meta name="require-session" />
+        <meta name="permission-id" content="1001" />
+    </head>
+    <body>
+        <div xslt-region="nav-trail">
+            <div class="well">
+                <h3><a href="root/groups/index.html">Groups</a> &#8594; <a data-bind-attr="href=details_url">Details</a> &#8594; <span data-bind-text="groupname">---</span></h3>
+            </div>
+        </div>
+           
+        <div xslt-region="sub-tabs"><!--xslt-include href="root/groups/tabs.html"--></div>
+        
+        <span class="footprint_msg">footprint_msg</span>
+        <form action="" method="post">
+            <fieldset>
+                <legend>Security Settings</legend>
+                <div class="clearfix">
+                    <div data-bind-function="Page::getPermissions">permissions</div>
+                </div>
+            </fieldset>
+            <div class="actions">
+                <input class="btn primary" type="submit" id="button_update" name="action" value="Update" />
+                <input class="btn danger" type="submit" id="button_delete" data-confirm="Are you sure?" name="action" value="Delete All" />
+            </div>
+        </form>
+    </body>
+</html>

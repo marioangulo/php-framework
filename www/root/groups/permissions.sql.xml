@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<sql>
+    <commands>
+        <command id="delete-group-permissions">
+            DELETE FROM user_permission WHERE fk_group_id = '#id#'
+        </command>
+        <command id="add-group-permission">
+            INSERT INTO user_permission
+            SET
+                fk_group_id = '#id#',
+                fk_security_id = '#fk_security_id#',
+                permit = '#permit#'
+        </command>
+        <command id="get-permission-branch">
+            SELECT
+                user_security.id AS fk_security_id,
+                user_security.dk_id_parent,
+                user_security.name,
+                group_permission.permit
+            FROM
+                user_security
+                LEFT JOIN user_permission group_permission ON user_security.id = group_permission.fk_security_id AND group_permission.fk_group_id  = #id#
+            WHERE
+                IF(LENGTH('#dk_id_parent#') = 0, user_security.dk_id_parent = 0, user_security.dk_id_parent = '#dk_id_parent#')
+            GROUP BY user_security.id
+            ORDER BY user_security.name
+        </command>
+    </commands>
+</sql>

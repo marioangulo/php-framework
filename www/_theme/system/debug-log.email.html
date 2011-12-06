@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+    <head></head>
+    <body>
+        <h3>Debug Log</h3>
+        <div data-label="stack-trace">
+            <table border="2" cellspacing="0" cellpadding="3">
+                <tr>
+                    <td><strong>URL:</strong></td>
+                    <td data-bind-text="log:url">---</td>
+                </tr>
+                <tr>
+                    <td><strong>Time:</strong></td>
+                    <td data-bind-text="log:timestamp">---</td>
+                </tr>
+                <tr>
+                    <td><strong>Application:</strong></td>
+                    <td data-bind-text="log:application">---</td>
+                </tr>
+                <tr>
+                    <td><strong>Source:</strong></td>
+                    <td data-bind-text="log:source">---</td>
+                </tr>
+                <tr>
+                    <td><strong>Debug Log:</strong></td>
+                    <td><pre data-bind-text="log:debug-log">---</pre></td>
+                </tr>
+                <tr>
+                    <td><strong>GET Request:</strong></td>
+                    <td><pre data-bind-text="log:http-get">---</pre></td>
+                </tr>
+                <tr>
+                    <td><strong>POST Request: </strong></td>
+                    <td><pre data-bind-text="log:http-post">---</pre></td>
+                </tr>
+                <tr>
+                    <td><strong>Session Request: </strong></td>
+                    <td><pre data-bind-text="log:session">---</pre></td>
+                </tr>
+                <tr>
+                    <td><strong>Cookie Request: </strong></td>
+                    <td><pre data-bind-text="log:cookies">---</pre></td>
+                </tr>
+                <tr>
+                    <td><strong>Environment Variables: </strong></td>
+                    <td><pre data-bind-text="log:environment">---</pre></td>
+                </tr>
+            </table>
+        </div>
+        <br />Thank you,
+        <br />System Administration
+    </body>
+</html>

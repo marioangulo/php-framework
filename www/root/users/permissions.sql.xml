@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<sql>
+    <commands>
+        <command id="delete-user-permissions">
+            DELETE FROM user_permission WHERE fk_user_id = '#id#'
+        </command>
+        <command id="add-user-permission">
+            INSERT INTO user_permission
+            SET
+                fk_user_id = '#id#',
+                fk_security_id = '#fk_security_id#',
+                permit = '#permit#'
+        </command>
+        <command id="get-user-group-ids">
+            SELECT user_group.id AS group_id
+            FROM
+                user_membership
+                LEFT JOIN user_group ON user_membership.fk_group_id = user_group.id
+            WHERE
+                user_membership.fk_user_id = '#id#'
+                AND user_membership.timestamp_cancelled = '0000-00-00 00:00:00'
+        </command>
+        <command id="get-permission-branch">
+            SELECT
+                user_security.id AS fk_security_id,
+                user_security.dk_id_parent,
+                user_security.name,
+                user_permission.permit,
+                group_permission.permit AS group_permit
+            FROM
+                user_security
+                LEFT JOIN user_permission ON user_security.id = user_permission.fk_security_id AND user_permission.fk_user_id = '#id#'
+                LEFT JOIN user_permission group_permission ON user_security.id = group_permission.fk_security_id AND group_permission.fk_group_id IN(#group_ids#) AND group_permission.permit = 'yes' AND group_permission.fk_user_id = '0'
+            WHERE
+                1=1
+                AND(
+                    IF(LENGTH('#dk_id_parent#') = 0, user_security.dk_id_parent = 0, user_security.dk_id_parent = '#dk_id_parent#')
+                )
+            GROUP BY user_security.id
+            ORDER BY user_security.name
+        </command>
+    </commands>
+</sql>

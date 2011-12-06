@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<sql>
+    <commands>
+        <command id="results-users">
+            SELECT SQL_CALC_FOUND_ROWS
+                id, 
+                username AS name,
+                CONCAT('root/users/add-edit.html?id=', id) AS url
+            FROM user
+            WHERE CONCAT(username, ' ', email) LIKE '%#q#%'
+            ORDER BY LENGTH(name), name ASC
+            LIMIT 10
+        </command>
+        <command id="results-groups">
+            SELECT SQL_CALC_FOUND_ROWS
+                id, 
+                name,
+                CONCAT('root/groups/add-edit.html?id=', id) AS url
+            FROM user_group
+            WHERE name LIKE '%#q#%'
+            ORDER BY LENGTH(name), name ASC
+            LIMIT 10
+        </command>
+        <command id="results-group-categories">
+            SELECT SQL_CALC_FOUND_ROWS
+                id, 
+                name,
+                CONCAT('root/group-categories/add-edit.html?id=', id) AS url
+            FROM user_group_category
+            WHERE name LIKE '%#q#%'
+            ORDER BY LENGTH(name), name ASC
+            LIMIT 10
+        </command>
+        <command id="results-security">
+            SELECT SQL_CALC_FOUND_ROWS
+                id, 
+                name,
+                CONCAT('root/security/add-edit.html?id=', id) AS url
+            FROM user_security
+            WHERE name LIKE '%#q#%'
+            ORDER BY LENGTH(name), name ASC
+            LIMIT 10
+        </command>
+        <command id="results-navigation">
+            SELECT 
+                id, name, url
+            FROM (
+                (select '' AS id, 'Users' AS name, 'root/users/index.html' AS url)
+                UNION
+                (select '' AS id, 'User History' AS name, 'root/user-history/index.html' AS url)
+                UNION
+                (select '' AS id, 'Groups' AS name, 'root/groups/index.html' AS url)
+                UNION
+                (select '' AS id, 'Group Categories' AS name, 'root/group-categories/index.html' AS url)
+                UNION
+                (select '' AS id, 'Security' AS name, 'root/security/index.html' AS url)
+                UNION
+                (select '' AS id, 'IP Access' AS name, 'root/ip-access/index.html' AS url)
+                UNION
+                (select '' AS id, 'Errors' AS name, 'root/errors/index.html' AS url)
+                UNION
+                (select '' AS id, 'Environment' AS name, 'root/environment/index.html' AS url)
+            ) AS data_table
+            WHERE name LIKE "%#q#%"
+            ORDER BY LENGTH(name), name ASC
+        </command>
+    </commands>
+</sql>

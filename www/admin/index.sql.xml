@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<sql>
+<commands>
+    <command id="total-account-count">
+        SELECT FORMAT(COUNT(1), 0) FROM account
+    </command>
+    <command id="total-category-count">
+        SELECT FORMAT(COUNT(1), 0) FROM category
+    </command>
+    <command id="total-status-count">
+        SELECT FORMAT(COUNT(1), 0) FROM status
+    </command>
+    <command id="total-tag-count">
+        SELECT FORMAT(COUNT(1), 0) FROM tag
+    </command>
+</commands>
+</sql>

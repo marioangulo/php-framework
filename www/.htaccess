@@ -1,0 +1,18 @@
+<FilesMatch "(.xsl|.sql.xml|.php|.email.html)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+<Files ".controller.php">
+    Allow from all
+</Files>
+
+php_flag display_errors on
+
+RewriteEngine On
+RewriteBase /
+
+RewriteCond %{HTTP_HOST} !^www\.|dev\.|local\.
+RewriteRule ^(.*)$ http://www.%{HTTP_HOST}/$1 [R=301,L]
+
+RewriteCond %{REQUEST_URI} !\.(php|zip|csv|css|txt|xml|js|gif|png|swf|ico|jpe?g)$
+RewriteRule (.*)$ /.controller.php [L]

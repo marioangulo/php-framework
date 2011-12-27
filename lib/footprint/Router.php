@@ -26,7 +26,7 @@ $_SERVER["X_ORIGINAL_SCRIPT_URI"] = $_SERVER["SCRIPT_URI"];
 $_SERVER["X_ORIGINAL_QUERY_STRING"] = $_SERVER["QUERY_STRING"];
 
 //make sure we have the right REMOTE_ADDR (ex: load balancers)
-if(isset($_SERVER["HTTP_X_FORWARDED_FOR"])) {
+if(isset($_SERVER["HTTP_X_FORWARDED_FOR"]) && F::$config->get("router-enable-xff") == true) {
     $_SERVER["REMOTE_ADDR"] = $_SERVER["HTTP_X_FORWARDED_FOR"];
 }
 

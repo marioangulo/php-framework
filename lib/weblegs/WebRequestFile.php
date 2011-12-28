@@ -19,6 +19,7 @@
 class WebRequestFile {
     public $formName;
     public $fileName;
+    public $filePath;
     public $contentType;
     public $contentLength;
     

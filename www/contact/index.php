@@ -47,7 +47,7 @@ class Page {
                 F::$alerts->add("Success. We have received your message.");
             }
             catch(Exception $e){
-                F::$errors->add("", "Email failed to send.");
+                F::$errors->add("Email failed to send.");
             }
         }
     }

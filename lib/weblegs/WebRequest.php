@@ -44,6 +44,7 @@ class WebRequest {
                 $thisFile = new WebRequestFile();
                 $thisFile->formName = $key;
                 $thisFile->fileName = $_FILES[$key]["name"];
+                $thisFile->filePath = $_FILES[$key]["tmp_name"];
                 $thisFile->contentType = $_FILES[$key]["type"];
                 $thisFile->contentLength = $_FILES[$key]["size"];        
                 $this->files[] = $thisFile;

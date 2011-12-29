@@ -113,7 +113,7 @@ class WebResponse {
         }
         
         //if we are ssl make cookies require ssl
-        if($secure == false && $_SERVER['SERVER_PORT'] == "443") {
+        if($secure == false && ($_SERVER['SERVER_PORT'] == "443" || $_SERVER['HTTP_X_FORWARDED_PORT'] == "443")) {
             $secure = true;
         }
         

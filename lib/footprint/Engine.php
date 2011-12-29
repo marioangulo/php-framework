@@ -273,7 +273,7 @@ class F {
         
         //enable sessions
         ini_set('session.gc_probability', 1);
-        session_set_cookie_params(60*60*24, "/", self::$config->get("cookie-domain"));
+        session_set_cookie_params(60*60*24, "/", self::$config->get("cookie-domain"), ($_SERVER['SERVER_PORT'] == "443" || $_SERVER['HTTP_X_FORWARDED_PORT'] == "443"));
         session_start();
         
         //setup error handlers

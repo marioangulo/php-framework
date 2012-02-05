@@ -66,7 +66,7 @@ class Page {
             F::$db->loadCommand("add-group", F::$engineArgs);
             F::$db->executeNonQuery();
             
-            F::$response->redirectURL = F::url(F::$engineNamespace .".html?id=". F::$request->input("id"));
+            F::$alerts->add("Changes saved.");
         }
     }
     
@@ -74,10 +74,18 @@ class Page {
      * handles the update action
      */
     public static function actionUpdate() {
-        F::$db->loadCommand("update", F::$engineArgs);
-        F::$db->executeNonQuery();
+        //validate
+        if(F::$request->input("permission_id") == "0" || F::$request->input("permission_id") == "") {
+            F::$errors->add("Didn't know what permission that's for.");
+        }
         
-        F::$response->redirectURL = F::url(F::$engineNamespace .".html?id=". F::$request->input("id"));
+        //take action
+        if(F::$errors->count() == 0) {
+            F::$db->loadCommand("update", F::$engineArgs);
+            F::$db->executeNonQuery();
+            
+            F::$alerts->add("Changes saved.");
+        }
     }
     
     /**
@@ -87,6 +95,6 @@ class Page {
         F::$db->loadCommand("delete", F::$engineArgs);
         F::$db->executeNonQuery();
         
-        F::$response->redirectURL = F::url(F::$engineNamespace .".html?id=". F::$request->input("id"));
+        F::$warnings->add("Deleted permissions.");
     }
 }

@@ -7,21 +7,25 @@
         <meta name="permission-id" content="1001" />
     </head>
     <body>
-        <div xslt-region="nav-trail">
-            <div class="well">
-                <h3 data-bind-function="Helpers::getBirdSeed">User Groups</h3>
+        <div class="row">
+            <div class="span12">
+                <h1 class="page-header">
+                    <span data-bind-function="Helpers::getBirdSeed">Security</span>
+                </h1>
             </div>
         </div>
-           
-        <div xslt-region="sub-tabs"><!--xslt-include href="root/security/tabs.html"--></div>
         
-        <span class="footprint_msg">footprint_msg</span>
+        <div><!--xslt-include href="root/security/tabs.html"--></div>
+        
+        <div data-section="alerts">
+            <span class="app-alerts">---</span>
+        </div>
         
         <div class="row">
-            <div class="span11 column">
+            <div class="span8 column" data-section="results">
                 <div data-bind-results="get-records">
-                    <table class="zebra-striped">
-                        <thead class="highlight">
+                    <table class="table table-striped table-bordered">
+                        <thead>
                             <tr>
                                 <th>User</th>
                                 <th>Has Permission</th>
@@ -30,14 +34,14 @@
                         </thead>
                         <tbody>
                             <tr data-label="blank-row" data-bind-function="Page::rowHandler">
-                                <form method="post" action="">
+                                <form method="post" action="" data-bind-attr="id=permission_id">
                                     <td data-bind-text="username" class="stretch">username</td>
                                     <td>
                                     <input type="radio" data-bind-input="permit" value="yes" name="permit" /> Yes 
                                     <input type="radio" data-bind-input="permit" value="no" name="permit" /> No</td>
-                                    <td class="no-wrap">
-                                        <input type="submit" class="button_update btn primary" value="Update" name="action" />
-                                        <input type="submit" class="btn danger" data-confirm="Are you sure?" value="Delete" name="action" />
+                                    <td class="nowrap">
+                                        <input type="button" class="button_update btn btn-primary" data-bind-attr="data-id=permission_id" value="Update" name="action" />
+                                        <input type="button" class="button_delete btn btn-danger" data-bind-attr="data-id=permission_id" value="Delete" name="action" />
                                         <input type="hidden" data-bind-input="permission_id" name="permission_id" />
                                     </td>
                                 </form>
@@ -49,17 +53,17 @@
                     </table>
                 </div>
             </div>
-            <div class="span5 column">
-                   <div class="puffy-box">
-                    <form class="form-stacked" method="post" action="">
+            <div class="span4 column">
+                   <div class="well">
+                    <form id="form_add" method="post" action="">
                         <fieldset>
-                            <div class="clearfix">
+                            <div class="control-group">
                                 <label for="search">Define permission for:</label>
-                                <div class="input">
-                                    <input name="search" data-bind-input="search" type="text" id="username_search" placeholder="find a user" maxlength="45" size="30" />
+                                <div class="controls">
+                                    <input name="search" class="stretch" data-bind-input="search" type="text" id="username_search" placeholder="find a user" maxlength="45" size="30" />
                                 </div>
                             </div>
-                            <div class="clearfix">
+                            <div class="control-group">
                                 <div class="input" data-section="user_search">
                                     <blockquote data-bind-results="ajax-search-results">
                                         <div data-label="blank-row">
@@ -68,9 +72,9 @@
                                     </blockquote>
                                 </div>
                             </div>
-                            <div class="clearfix">
-                                <div class="input">
-                                    <input class="btn" type="submit" value="Add User" name="action" />
+                            <div class="control-group">
+                                <div class="controls">
+                                    <input class="btn" type="button" id="button_add" value="Add User" name="action" />
                                 </div>
                             </div>
                         </fieldset>

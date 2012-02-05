@@ -2,25 +2,26 @@
 <html>
     <head></head>
     <body>
-        <div class="well" data-label="paging">
-            <table class="data-paging-ajax" data-label="paging">
-                <tr>
-                    <td class="left">
-                        <select name="page_jump" data-page="page_jump" data-label="page_jump" size="1"></select>
-                    </td>
-                    <td class="center">
-                        Records <span data-label="pager_record_start">pager_record_start</span> - <span data-label="pager_record_end">pager_record_end</span> of <span data-label="pager_total_records">pager_total_records</span> <span data-label="timer_data">| <span data-label="query_time">query-time</span> seconds</span>
-                    </td>
-                    <td class="right">
-                        <div class="pagination">
-                            <ul>
-                                <li data-label="pager_prev" class="prev"><a href="javascript:;">&#171; Prev</a></li> 
-                                <li data-label="pager_next" class="next"><a href="javascript:;">Next &#187;</a></li> 
-                            </ul>
-                        </div>
-                    </td>
-                </tr>
-            </table>
+        <div class="paging" data-label="paging">
+            <div class="pull-left">
+                <ul class="nav nav-pills">
+                    <li class="dropdown active">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:;">Page... <i class="icon-arrow-down icon-white"></i></a>
+                        <ul class="dropdown-menu">
+                            <li data-label="pager_blank"><a href="javascript:;">---</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="pull-right">
+                <div class="pagination">
+                    <ul>
+                        <li data-label="pager_prev"><a href="javascript:;">Prev</a></li> 
+                        <li data-label="pager_next"><a href="javascript:;">Next</a></li> 
+                    </ul>
+                </div>
+            </div>
+            <div class="clear"></div>
         </div>
     </body>
 </html>

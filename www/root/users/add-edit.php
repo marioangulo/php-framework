@@ -56,7 +56,7 @@ class Page {
             F::$db->loadCommand("create-new-user", F::$engineArgs);
             F::$db->executeNonQuery();
             
-            F::$response->redirectURL = F::url(F::$engineNamespace .".html?id=". F::$db->getLastInsertID());
+            F::$responseJSON["id"] = F::$db->getLastInsertID();
         }
     }
     
@@ -72,7 +72,7 @@ class Page {
             F::$db->loadCommand("update-user", F::$engineArgs);
             F::$db->executeNonQuery();
             
-            F::$response->redirectURL = F::url(F::$engineNamespace .".html?id=". F::$request->input("id"));
+            F::$alerts->add("Changes saved.");
         }
     }
     
@@ -92,6 +92,6 @@ class Page {
         F::$db->loadCommand("delete-user", F::$engineArgs);
         F::$db->executeNonQuery();
         
-        F::$response->redirectURL = F::url("root/users/index.html");
+        F::$responseJSON["delete"] = true;
     }
 }

@@ -7,21 +7,23 @@
         <meta name="permission-id" content="1001" />
     </head>
     <body>
-        <div xslt-region="nav-trail">
-            <div class="well">
-                <h3><a href="root/users/index.html">Users</a> &#8594; <a data-bind-attr="href=details_url">Details</a> &#8594; <span data-bind-text="username">---</span></h3>
+        <div class="row">
+            <div class="span12">
+                <h1 class="page-header"><a href="root/users/index.html">Users</a> / Details / <span data-bind-text="username">---</span></h1>
             </div>
         </div>
            
-        <div xslt-region="sub-tabs"><!--xslt-include href="root/users/tabs.html"--></div>
+        <div><!--xslt-include href="root/users/tabs.html"--></div>
         
-        <span class="footprint_msg">footprint_msg</span>
+        <div data-section="alerts">
+            <span class="app-alerts">---</span>
+        </div>
         
         <div class="row">
-            <div class="span11 column">
-                <div data-bind-results="get-records" data-bind-paging="true">
-                    <table class="zebra-striped">
-                        <thead class="highlight">
+            <div class="span8 column" data-section="results">
+                <div data-bind-results="get-records">
+                    <table class="table table-striped table-bordered">
+                        <thead>
                             <tr>
                                 <th>Group</th>
                                 <th>Is Default</th>
@@ -31,7 +33,7 @@
                         </thead>
                         <tbody>
                             <tr data-label="blank-row" data-bind-function="Page::rowHandler">
-                                <form action="" method="post" name="form">
+                                <form action="" method="post" name="form" data-bind-attr="id=fk_membership_id">
                                     <td data-bind-text="group_name" class="stretch">group_name</td>
                                     <td>
                                         <div>
@@ -41,13 +43,13 @@
                                             <input data-bind-input="is_default" type="radio" value="no" name="is_default" /> no
                                         </div>
                                     </td>
-                                    <td class="no-wrap">
+                                    <td class="nowrap">
                                         <div>From: <span data-bind-text="timestamp_created">timestamp_created</span></div>
                                         <div>To: <span data-bind-text="timestamp_cancelled">timestamp_cancelled</span></div>
                                     </td>
-                                    <td class="no-wrap">
-                                        <input class="button_update btn primary" type="submit" value="Update" name="action" />
-                                        <input class="button_cancel btn danger" data-confirm="Are you sure?" type="submit" value="Cancel" name="action" />
+                                    <td class="nowrap">
+                                        <input class="button_update btn btn-primary" type="button" value="Update" data-bind-attr="data-id=fk_membership_id" name="action" />
+                                        <input class="button_cancel btn btn-danger" type="button" value="Cancel" data-bind-attr="data-id=fk_membership_id" name="action" />
                                         <input data-bind-input="fk_membership_id" type="hidden" name="fk_membership_id" />
                                     </td>
                                 </form>
@@ -59,15 +61,15 @@
                     </table>
                 </div>
             </div>
-            <div class="span5 column">
-                   <div class="puffy-box">
-                    <form class="form-stacked" method="post" action="">
+            <div class="span4 column">
+                   <div class="well">
+                    <form id="form_add" method="post" action="">
                         <fieldset>
-                            <div class="clearfix">
+                            <div class="control-group">
                                 <label for="fk_group_id">Add user to group:</label>
-                                <div class="input">
-                                    <select size="1" name="fk_group_id" data-bind-function="Helpers::groupDD"></select> 
-                                    <input class="btn" type="submit" value="Add" name="action" />
+                                <div class="controls">
+                                    <select name="fk_group_id" class="stretch" data-bind-function="Helpers::groupDD"></select> 
+                                    <input id="button_add" class="btn" type="button" value="Add" name="action" />
                                 </div>
                             </div>
                         </fieldset>

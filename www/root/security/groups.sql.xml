@@ -1,40 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <sql>
-    <commands>
-        <command id="duplicate-permission-check">
-            SELECT fk_group_id
-            FROM user_permission
-            WHERE
-                fk_group_id = '#fk_group_id#'
-                AND fk_security_id = '#id#'
-        </command>
-        <command id="add-group">
-            INSERT INTO user_permission
-            SET
-                fk_group_id = '#fk_group_id#',
-                fk_user_id = 0,
-                fk_security_id = '#id#',
-                permit = 'yes'
-        </command>
-        <command id="update">
-            UPDATE user_permission
-            SET permit = '#permit#'
-            WHERE id = '#permission_id#'
-        </command>
-        <command id="delete">
-            DELETE FROM user_permission WHERE id = '#permission_id#'
-        </command>
-        <command id="get-records">
-            SELECT
-                user_permission.id AS permission_id,
-                user_permission.permit,
-                user_group.name AS group_name
-            FROM
-                user_permission
-                LEFT JOIN user_group ON user_permission.fk_group_id = user_group.id
-            WHERE
-                user_permission.fk_security_id = '#id#'
-                AND NOT user_permission.fk_group_id = '0'
-        </command>
-    </commands>
+<commands>
+    <command id="duplicate-permission-check">
+        SELECT fk_group_id
+        FROM user_permission
+        WHERE
+            fk_group_id = '#fk_group_id#'
+            AND fk_security_id = '#id#'
+    </command>
+    <command id="add-group">
+        INSERT INTO user_permission
+        SET
+            fk_group_id = '#fk_group_id#',
+            fk_user_id = 0,
+            fk_security_id = '#id#',
+            permit = 'yes'
+    </command>
+    <command id="update">
+        UPDATE user_permission
+        SET permit = '#permit#'
+        WHERE id = '#permission_id#'
+    </command>
+    <command id="delete">
+        DELETE FROM user_permission WHERE id = '#permission_id#'
+    </command>
+    <command id="get-records">
+        SELECT
+            user_permission.id AS permission_id,
+            user_permission.permit,
+            user_group.name AS group_name
+        FROM
+            user_permission
+            LEFT JOIN user_group ON user_permission.fk_group_id = user_group.id
+        WHERE
+            user_permission.fk_security_id = '#id#'
+            AND NOT user_permission.fk_group_id = '0'
+    </command>
+</commands>
 </sql>

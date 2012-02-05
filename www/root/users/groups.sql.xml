@@ -1,70 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <sql>
-    <commands>
-        <command id="duplicate-group-check">
-            SELECT fk_user_id
-            FROM user_membership
-            WHERE
-                fk_user_id = '#id#'
-                AND fk_group_id = '#fk_group_id#'
-                AND timestamp_cancelled = '0000-00-00 00:00:00'
-        </command>
-        <command id="add-to-group">
-            INSERT INTO user_membership
-            SET
-                fk_user_id = '#id#',
-                fk_group_id = '#fk_group_id#',
-                timestamp_created = '#timestamp_created#'
-        </command>
-        <command id="remove-default-group">
-            UPDATE user_membership
-            SET is_default = 'no'
-            WHERE fk_user_id = '#id#'
-        </command>
-        <command id="set-default-group">
-            UPDATE user_membership
-            SET is_default = '#is_default#'
-            WHERE id = '#fk_membership_id#'
-        </command>
-        <command id="cancel-membership">
-            UPDATE user_membership
-            SET
-                is_default = 'no',
-                timestamp_cancelled = '#timestamp_cancelled#'
-            WHERE id = '#fk_membership_id#'
-        </command>
-        <command id="get-records">
-            SELECT
-                user_membership.id AS fk_membership_id,
-                user_membership.is_default,
-                IF(user_membership.timestamp_created = '0000-00-00 00:00:00', '---', user_membership.timestamp_created) AS timestamp_created,
-                IF(user_membership.timestamp_cancelled = '0000-00-00 00:00:00', '---', user_membership.timestamp_cancelled) AS timestamp_cancelled,
-                user_group.name AS group_name
-            FROM
-                user_membership
-                LEFT JOIN user_group ON user_membership.fk_group_id = user_group.id
-            WHERE user_membership.fk_user_id = '#id#'
-            ORDER BY
-                user_membership.timestamp_cancelled ASC,
-                user_membership.timestamp_created DESC
-        </command>
-        <command id="group-dd-categories">
-            SELECT
-                id AS category_id,
-                name
-            FROM user_group_category
-            WHERE is_active = 'yes'
-            ORDER BY name
-        </command>
-        <command id="group-dd-items">
-            SELECT
-                id AS group_id,
-                name
-            FROM user_group
-            WHERE
-                is_active = 'yes'
-                AND fk_category_id = '#fk_category_id#'
-            ORDER BY name
-        </command>
-    </commands>
+<commands>
+    <command id="duplicate-group-check">
+        SELECT fk_user_id
+        FROM user_membership
+        WHERE
+            fk_user_id = '#id#'
+            AND fk_group_id = '#fk_group_id#'
+            AND timestamp_cancelled = '0000-00-00 00:00:00'
+    </command>
+    <command id="add-to-group">
+        INSERT INTO user_membership
+        SET
+            fk_user_id = '#id#',
+            fk_group_id = '#fk_group_id#',
+            timestamp_created = '#timestamp_created#'
+    </command>
+    <command id="remove-default-group">
+        UPDATE user_membership
+        SET is_default = 'no'
+        WHERE fk_user_id = '#id#'
+    </command>
+    <command id="set-default-group">
+        UPDATE user_membership
+        SET is_default = '#is_default#'
+        WHERE id = '#fk_membership_id#'
+    </command>
+    <command id="cancel-membership">
+        UPDATE user_membership
+        SET
+            is_default = 'no',
+            timestamp_cancelled = '#timestamp_cancelled#'
+        WHERE id = '#fk_membership_id#'
+    </command>
+    <command id="get-records">
+        SELECT
+            user_membership.id AS fk_membership_id,
+            user_membership.is_default,
+            IF(user_membership.timestamp_created = '0000-00-00 00:00:00', '---', user_membership.timestamp_created) AS timestamp_created,
+            IF(user_membership.timestamp_cancelled = '0000-00-00 00:00:00', '---', user_membership.timestamp_cancelled) AS timestamp_cancelled,
+            user_group.name AS group_name
+        FROM
+            user_membership
+            LEFT JOIN user_group ON user_membership.fk_group_id = user_group.id
+        WHERE user_membership.fk_user_id = '#id#'
+        ORDER BY
+            user_membership.timestamp_cancelled ASC,
+            user_membership.timestamp_created DESC
+    </command>
+    <command id="group-dd-categories">
+        SELECT
+            id AS category_id,
+            name
+        FROM user_group_category
+        WHERE is_active = 'yes'
+        ORDER BY name
+    </command>
+    <command id="group-dd-items">
+        SELECT
+            id AS group_id,
+            name
+        FROM user_group
+        WHERE
+            is_active = 'yes'
+            AND fk_category_id = '#fk_category_id#'
+        ORDER BY name
+    </command>
+</commands>
 </sql>

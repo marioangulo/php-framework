@@ -1,0 +1,24 @@
+/**
+ * shortcuts
+ */
+.stretch {
+    width: 100%;
+}
+input.stretch, 
+textarea.stretch,
+select.stretch {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+input.stretch {
+    height: 27px;
+}
+.nowrap {
+    white-space: nowrap;
+}
+.wrap {
+    white-space: normal;
+}
+.clear {
+    clear: both;
+}

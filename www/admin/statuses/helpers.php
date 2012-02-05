@@ -2,7 +2,7 @@
 
 class Helpers {
     /**
-     * generates teh pivot table drop down
+     * generates the pivot table drop down
      */
     public static function pivotTableDD($node, $data) {
         //create a list menu

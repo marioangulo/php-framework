@@ -13,6 +13,7 @@ class Helpers {
             F::$db->sqlCommand = "SELECT DISTINCT fk_pivot_table FROM tag";
             $dropDown->addOption("--- any ---", "");
             $dropDown->addOption("--- none ---", "0");
+
         }
         else if(F::$engineNamespace == "admin/tags/add-edit") {
             F::$db->sqlCommand = "SHOW TABLES FROM #db#";

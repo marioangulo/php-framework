@@ -73,9 +73,14 @@ class WebResponse {
      * writes an http response header
      * @param string $url
      */
-    public function addHeader($name, $value) {
+    public function addHeader($name, $value = null) {
         //set http header
-        header($name .": ". $value);
+        if(!isset($value)) {
+            header($name);
+        }
+        else {
+            header($name .": ". $value);
+        }
     }
     
     /**

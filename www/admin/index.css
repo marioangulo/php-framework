@@ -11,4 +11,13 @@
     font-size: 2.75em;
     margin-bottom: 0px;
 }
-
+.well h1 {
+    margin: 0px;
+    margin-bottom: 10px;
+    padding: 0px;
+}
+.well p {
+    color: #666;
+    font-size: 1.3em;
+    line-height: 1.5;
+}

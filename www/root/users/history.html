@@ -7,92 +7,87 @@
         <meta name="permission-id" content="1001" />
     </head>
     <body>
-        <div xslt-region="nav-trail">
-            <div class="well">
-                <div class="float-right">
-                    <a id="button_download" class="btn info" data-bind-attr="href=button_download">Download Results</a>
-                    <a id="button_delete" class="btn danger" data-bind-attr="href=button_delete" data-confirm="Are you sure?">Delete Results</a>
-                </div>
-                <h3><a href="root/users/index.html">Users</a> &#8594; <a data-bind-attr="href=details_url">Details</a> &#8594; <span data-bind-text="username">---</span></h3>
+        <div class="row">
+            <div class="span12">
+                <h1 class="page-header">
+                    <div class="pull-right">
+                        <input type="button" id="button_download" class="btn btn-info" value="Download Results" />
+                        <input type="button" id="button_delete" class="btn btn-danger" value="Delete Results" />
+                    </div>
+                    <a href="root/users/index.html">Users</a> / Details / <span data-bind-text="username">---</span>
+                </h1>
             </div>
         </div>
            
-        <div xslt-region="sub-tabs"><!--xslt-include href="root/users/tabs.html"--></div>
+        <div><!--xslt-include href="root/users/tabs.html"--></div>
         
-        <div class="well filters">
-            <form action="">
-                <table>
+        <form class="filters" action="">
+            <div class="row">
+                <div class="span4">
+                    <label>Details Search</label>
+                    <input type="text" name="details" class="stretch" data-bind-input="details" value="" maxlength="45" size="20"/>
+                </div>
+                <div class="span4">
+                    <label>Date Range</label>
+                    <input type="text" name="date_from" class="span2" data-bind-input="date_from" data-date-picker="true" value="" maxlength="12" size="11"/> 
+                    to <input type="text" name="date_to" class="span2" data-bind-input="date_to" data-date-picker="true" value="" maxlength="12" size="11"/>
+                </div>
+                <div class="span4">
+                    <label>Show</label>
+                    <select name="show_rows" class="stretch" data-bind-input="show_rows">
+                        <option value="20">20 rows</option>
+                        <option value="30">30 rows</option>
+                        <option value="40">40 rows</option>
+                        <option value="50">50 rows</option>
+                        <option value="75">75 rows</option>
+                        <option value="100">100 rows</option>
+                    </select>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </form>
+        
+        <div data-section="alerts">
+            <span class="app-alerts">---</span>
+        </div>
+        
+        <div data-section="results">
+            <div data-bind-results="get-records" data-bind-paging="ajax">
+                <table class="table table-striped table-bordered">
                     <thead>
                         <tr>
-                            <th>Details Search</th>
-                            <th>Date Range</th>
-                            <th>Show Rows</th>
-                            <th>&#160;</th>
+                            <th>Time</th>
+                            <th>Details</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>
-                                <input type="hidden" name="id" data-bind-input="id" />
-                                <input type="text" name="details" data-bind-input="details" value="" maxlength="45" size="20"/>
+                        <tr data-label="blank-row" data-bind-function="Page::rowHandler">
+                            <td data-label="date_time">
+                                <div data-label="date">date</div>
+                                <div data-label="time">time</div>
                             </td>
-                            <td>
-                                <input type="text" name="date_from" data-bind-input="date_from" data-date-picker="true" value="" maxlength="12" size="11"/> to <input type="text" name="date_to" data-bind-input="date_to" data-date-picker="true" value="" maxlength="12" size="11"/>
+                            <td class="stretch">
+                                <div>
+                                    <b>Details:</b>
+                                    <span data-bind-text="details">details</span>
+                                </div>
+                                <div>
+                                    <b>URL:</b>
+                                    <span data-bind-text="url">url</span>
+                                </div>
+                                <div>
+                                    <b>IP Address:</b>
+                                    <span data-bind-text="ip_address">ip_address</span>
+                                </div>
                             </td>
-                            <td>
-                                <select size="1" name="show_rows" data-bind-input="show_rows">
-                                    <option value="20">20</option>
-                                    <option value="30">30</option>
-                                    <option value="40">40</option>
-                                    <option value="50">50</option>
-                                    <option value="75">75</option>
-                                    <option value="100">100</option>
-                                </select>
-                            </td>
-                            <td>
-                                <input class="btn" type="submit" value="Filter" name="filter" />
-                            </td>
+                        </tr>
+                        <tr data-label="no-results-row">
+                            <td colspan="2">No records matched your query.</td>
                         </tr>
                     </tbody>
                 </table>
-            </form>
-        </div>
-        
-        <div data-bind-results="get-records" data-bind-paging="true">
-            <table class="zebra-striped">
-                <thead class="highlight">
-                    <tr>
-                        <th>Time</th>
-                        <th class="stretch">Details</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr data-label="blank-row" data-bind-function="Page::rowHandler">
-                        <td data-label="date_time">
-                            <div data-label="date">date</div>
-                            <div data-label="time">time</div>
-                        </td>
-                        <td>
-                            <div>
-                                <b>Details:</b>
-                                <span data-bind-text="details">details</span>
-                            </div>
-                            <div>
-                                <b>URL:</b>
-                                <span data-bind-text="url">url</span>
-                            </div>
-                            <div>
-                                <b>IP Address:</b>
-                                <span data-bind-text="ip_address">ip_address</span>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr data-label="no-results-row">
-                        <td colspan="5">No records matched your query.</td>
-                    </tr>
-                </tbody>
-            </table>
-            <!--xslt-include href="_theme/system/paging-table.html"-->
+                <!--xslt-include href="_theme/system/paging-table-ajax.html"-->
+            </div>
         </div>
     </body>
 </html>

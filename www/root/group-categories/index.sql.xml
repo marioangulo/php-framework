@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <sql>
-    <commands>
-        <command id="get-records">
-            SELECT SQL_CALC_FOUND_ROWS
-                id,
-                is_active,
-                name,
-                description,
-                CONCAT('root/group-categories/add-edit.html?id=', user_group_category.id) AS url
-            FROM user_group_category
-            WHERE
-                IF(LENGTH('#is_active#') = 0, 1=1, is_active = '#is_active#')
-            ORDER BY name
-            LIMIT #_limit_#
-        </command>
-    </commands>
+<commands>
+    <command id="get-records">
+        SELECT SQL_CALC_FOUND_ROWS
+            id,
+            is_active,
+            name,
+            description,
+            CONCAT('root/group-categories/add-edit.html?id=', user_group_category.id) AS url
+        FROM user_group_category
+        WHERE
+            IF(LENGTH('#is_active#') = 0, 1=1, is_active = '#is_active#')
+        ORDER BY name
+        LIMIT #_limit_#
+    </command>
+</commands>
 </sql>

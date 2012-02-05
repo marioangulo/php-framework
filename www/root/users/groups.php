@@ -12,8 +12,10 @@ class Page {
         if(isset($data["timestamp_cancelled"])) {
             if($data["timestamp_cancelled"] != "---"){
                 $row->root()->setAttribute("class", "inactive");
-                $row->getNodesByAttribute("class", "button_update")->setAttribute("disabled", "disabled");
-                $row->getNodesByAttribute("class", "button_cancel")->setAttribute("disabled", "disabled");
+                $row->traverse("//*[contains(@class, 'button_update')]")->setAttribute("disabled", "disabled");
+                $row->traverse("//*[contains(@class, 'button_update')]")->setAttribute("class", "btn");
+                $row->traverse("//*[contains(@class, 'button_cancel')]")->setAttribute("disabled", "disabled");
+                $row->traverse("//*[contains(@class, 'button_cancel')]")->setAttribute("class", "btn");
             }
         }
         
@@ -43,7 +45,7 @@ class Page {
             F::$db->bindKeys(F::$engineArgs);
             F::$db->executeNonQuery();
             
-            F::$response->redirectURL = F::url(F::$engineNamespace .".html?id=". F::$request->input("id"));
+            F::$alerts->add("Changes saved.");
         }
     }
     
@@ -59,7 +61,7 @@ class Page {
         F::$db->loadCommand("set-default-group", F::$engineArgs);
         F::$db->executeNonQuery();
         
-        F::$response->redirectURL = F::url(F::$engineNamespace .".html?id=". F::$request->input("id"));
+        F::$alerts->add("Changes saved.");
     }
     
     /**
@@ -78,7 +80,7 @@ class Page {
             F::$db->bindKeys(F::$engineArgs);
             F::$db->executeNonQuery();
             
-            F::$response->redirectURL = F::url(F::$engineNamespace .".html?id=". F::$request->input("id"));
+            F::$warnings->add("Canceled membership.");
         }
     }
 }

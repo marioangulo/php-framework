@@ -12,9 +12,9 @@ class Page {
      * handles the before actions event
      */
     public static function eventBeforeActions() {
-        //figure out if we should redirect to admin, client or publisher.
+        //figure out if we should redirect to admin or account.
         if(F::$user->isLoggedIn()) {
-            self::defaultRedirect();
+            F::$response->redirectURL = self::defaultRedirect();
         }
     }
     
@@ -27,29 +27,29 @@ class Page {
         
         //admin or root?
         if($tmpDefaultGroup == "1" || $tmpDefaultGroup == "2") {
-            F::$response->redirectURL = F::url("admin/index.html");
+            return F::url("admin/index.html");
         }
         //account?
         else if($tmpDefaultGroup == "3") {
-            F::$response->redirectURL = F::url("account/index.html");
+            return F::url("account/index.html");
         }
         //make more requests to figure out where we should go
         else {
             //root?
             if(F::$user->isMemberOfGroup(F::$request->session("user_id"), "1")) {
-                F::$response->redirectURL = F::url("admin/index.html");
+                return F::url("admin/index.html");
             }
             //admin?
             else if(F::$user->isMemberOfGroup(F::$request->session("user_id"), "2")) {
-                F::$response->redirectURL = F::url("admin/index.html");
+                return F::url("admin/index.html");
             }
             //account?
             else if(F::$user->isMemberOfGroup(F::$request->session("user_id"), "3")) {
-                F::$response->redirectURL = F::url("account/index.html");
+                return F::url("account/index.html");
             }
             //send to the home page
             else {
-                F::$response->redirectURL = F::url("index.html");
+                return F::url("index.html");
             }
         }
     }
@@ -88,16 +88,16 @@ class Page {
                     
                     //are we going somewhere specific?
                     if(F::$request->input("return") != "") {
-                        F::$response->redirectURL = F::$request->input("return");
+                        F::$responseJSON["redirect"] = F::$request->input("return");
                     }
                     else {
-                        self::defaultRedirect();
+                        F::$responseJSON["redirect"] = self::defaultRedirect();
                     }
                 }
             }
             else {
                 //log anonymous user history
-                F::$user->logHistory("Attempted user login with username: '". F::$request->input("username") ."'.");
+                F::$user->logHistory("Attempted user login as: '". F::$request->input("username") ."'.");
                 
                 //set notice
                 F::$errors->add("Login failed: username and password combination not found or your account is inactive.");

@@ -31,7 +31,7 @@ class Page {
             F::$db->loadCommand("create-new", F::$engineArgs);
             F::$db->executeNonQuery();
             
-            F::$response->redirectURL = F::url(F::$engineNamespace .".html?id=". F::$db->getLastInsertID());
+            F::$responseJSON["id"] = F::$db->getLastInsertID();
         }
     }
     
@@ -47,7 +47,7 @@ class Page {
             F::$db->loadCommand("update", F::$engineArgs);
             F::$db->executeNonQuery();
             
-            F::$response->redirectURL = F::url(F::$engineNamespace .".html?id=". F::$request->input("id"));
+            F::$alerts->add("Changes saved.");
         }
     }
     
@@ -60,7 +60,7 @@ class Page {
             F::$db->loadCommand("delete", F::$engineArgs);
             F::$db->executeNonQuery();
             
-            F::$response->redirectURL = F::url("admin/categories/index.html");
+            F::$responseJSON["delete"] = true;
         }
     }
 }

@@ -1,27 +1,14 @@
 /**
  * page styles
  */
+form,
+.control-group {
+    margin-bottom: 0px;
+}
 .inactive {
 }
 .inactive td {
     text-decoration: line-through;
     border-top: 1px solid #999 !important;
     background-color: #ccc !important;
-}
-
-.puffy-box {
-    background-color: #eee;
-    border: 2px solid #ccc;
-    padding: 10px;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
-}
-.puffy-box form {
-    padding-left: 0px;
-    margin-bottom: 0px;
-}
-.puffy-box fieldset {
-    padding-top: 0px;
-    margin-bottom: 0px;.
 }

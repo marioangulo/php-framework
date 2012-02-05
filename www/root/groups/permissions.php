@@ -64,7 +64,7 @@ class Page {
             }
         }
         
-        F::$response->redirectURL = F::url(F::$engineNamespace .".html?id=". F::$request->input("id"));
+        F::$alerts->add("Changes saved.");
     }
     
     /**
@@ -74,6 +74,6 @@ class Page {
         F::$db->loadCommand("delete-group-permissions", F::$engineArgs);
         F::$db->executeNonQuery();
         
-        F::$response->redirectURL = F::url(F::$engineNamespace .".html?id=". F::$request->input("id"));
+        F::$warnings->add("Deleted group permissions.");
     }
 }

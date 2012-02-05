@@ -89,12 +89,19 @@ var F = {
             url: argURL,
             
             //loading handler
-            beforeSend: function(request) { $("[class='ajax-running']").show(100); },
+            beforeSend: function(request) { $(".ajax-running").show(100); },
             
             //success handler
             success: function(jResponse, status, response) {
                 //hide loading indicator
-                $("[class='ajax-running']").hide();
+                $(".ajax-running").hide();
+                
+                //if we got logged out, redirect back to re-initiate login
+                if(response.getResponseHeader("x-login-status")) {
+                    if(response.getResponseHeader("x-login-status") == "logged_out" && F.engineNamespace != "login/index") {
+                        location.href = location.href;
+                    }
+                }
                 
                 //process sections
                 if(typeof(jResponse) == "object") {
@@ -104,7 +111,7 @@ var F = {
                     //do we have a callback?
                     if(argCallBack) {
                         if(typeof(argCallBack) == "function") {
-                            argCallBack(jResponse, this);
+                            argCallBack(jResponse, response);
                         }
                         else {
                             eval(argCallBack +"(jResponse, this)");
@@ -116,17 +123,17 @@ var F = {
             //error handler
             error: function(response, text, error){
                 //hide loading indicator
-                $("[class='ajax-running']").hide();
+                $(".ajax-running").hide();
                 
                 //should we cry?
                 if(F.xhrCryBaby) {
                     //notify of error
-                    alert("this.xhr: There was an error.\n"+ error);
+                    alert("F.xhr: There was an error.\n"+ error);
                     
                     //get response and show in pop-up
-                    var ErrorWindow = window.open("", "Error", "status=no,scrollbars=yes,resizable=yes,width=640,Height=480");
-                    if(ErrorWindow){
-                        ErrorWindow.document.write(response.responseText);
+                    var errorWindow = window.open("", "Error", "status=no,scrollbars=yes,resizable=yes,width=640,Height=480");
+                    if(errorWindow){
+                        errorWindow.document.write(response.responseText);
                     }
                 }
             }

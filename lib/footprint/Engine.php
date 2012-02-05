@@ -243,7 +243,7 @@ class F {
         
         //run final data binder
         self::sysLog("<final-data-binder>");
-        self::$doc->finalBind();
+        self::$doc->finalBind(F::$engineArgs);
         self::sysLog("</final-data-binder>");
         
         //////////////////////////////////////////
@@ -542,7 +542,7 @@ class F {
         //should we run the final document bind?
         if(!$isAjaxRequest) {
             self::sysLog("<final-data-binder>");
-            self::$doc->finalBind();
+            self::$doc->finalBind(F::$engineArgs);
             self::sysLog("</final-data-binder>");
             
             //move seo elements to the top of the head tag
@@ -566,12 +566,20 @@ class F {
             self::$doc->processWebAlerts();
         }
         
+        //////////////////////////////////////////
+        self::fireEvents("eventBeforeOutputGeneration");
+        //////////////////////////////////////////
+        
         //generate the final output
         $outputData = null;
         if($isAjaxRequest) {
             $tmpJSON = array();
-            $tmpJSON["sections"] = self::$responseSections;
-            $tmpJSON["data"] = self::$responseJSON;
+            if(count(self::$responseSections) > 0) {
+                $tmpJSON["sections"] = self::$responseSections;
+            }
+            if(count(self::$responseJSON) > 0) {
+                $tmpJSON["data"] = self::$responseJSON;
+            }
             $outputData = json_encode($tmpJSON);
         }
         else {
@@ -745,51 +753,58 @@ class F {
         $notifications = "";
         
         //warnings
-        if(self::$warnings->count() > 0) {
-            $warnings = "";
-            for($i = 0 ; $i < self::$warnings->count() ; $i++) {
-                $warnings .= "<p>". self::$warnings->item($i) ."</p>";
+        if(isset(self::$warnings)) {
+            if(self::$warnings->count() > 0) {
+                $warnings = "";
+                for($i = 0 ; $i < self::$warnings->count() ; $i++) {
+                    $warnings .= "<p>". self::$warnings->item($i) ."</p>";
+                }
+                
+                $notifications .= "<div class=\"alert alert-block alert-warning\">". $warnings ."</div>";
             }
-            
-            $notifications .= "<div class=\"alert-message warning\">". $warnings ."</div>";
         }
         
         //errors
-        if(self::$errors->count() > 0) {
-            $errors = "";
-            for($i = 0 ; $i < self::$errors->count() ; $i++) {
-                $error = self::$errors->item($i);
-                if(is_array($error)) {
-                    $errors .= "<p for=\"". $error[0] ."\">". $error[1] ."</p>";
+        if(self::$errors) {
+            if(self::$errors->count() > 0) {
+                $errors = "";
+                for($i = 0 ; $i < self::$errors->count() ; $i++) {
+                    $error = self::$errors->item($i);
+                    if(is_array($error)) {
+                        $errors .= "<p for=\"". $error[0] ."\">". $error[1] ."</p>";
+                    }
+                    else {
+                        $errors .= "<p>". $error ."</p>";
+                    }
                 }
-                else {
-                    $errors .= "<p>". $error ."</p>";
-                }
+                
+                $notifications .= "<div class=\"alert alert-block alert-error\"><h4 class=\"alert-heading\">Error!</h4>". $errors ."</div>";
             }
-            
-            $notifications .= "<div class=\"alert-message error\">". $errors ."</div>";
         }
         
         //alerts
-        if(self::$alerts->count() > 0) {
-            $alerts = "";
-            for($i = 0 ; $i < self::$alerts->count() ; $i++) {
-                $alerts .= "<p>". self::$alerts->item($i) ."</p>";
+        if(self::$alerts) {
+            if(self::$alerts->count() > 0) {
+                $alerts = "";
+                for($i = 0 ; $i < self::$alerts->count() ; $i++) {
+                    $alerts .= "<p>". self::$alerts->item($i) ."</p>";
+                }
+                
+                $notifications .= "<div class=\"alert alert-block alert-success\">". $alerts ."</div>";
             }
-            
-            $notifications .= "<div class=\"alert-message success\">". $alerts ."</div>";
         }
         
         //info
-        if(self::$info->count() > 0) {
-            $info = "";
-            for($i = 0 ; $i < self::$info->count() ; $i++) {
-                $info .= "<p>". self::$info->item($i) ."</p>";
+        if(self::$info) {
+            if(self::$info->count() > 0) {
+                $info = "";
+                for($i = 0 ; $i < self::$info->count() ; $i++) {
+                    $info .= "<p>". self::$info->item($i) ."</p>";
+                }
+                
+                $notifications .= "<div class=\"alert alert-block alert-info\">". $info ."</div>";
             }
-            
-            $notifications .= "<div class=\"alert-message info\">". $info ."</div>";
         }
-        
         
         #return notifications
         return $notifications;
@@ -809,7 +824,7 @@ class F {
      * @param string $data
      */
     public static function sysLog($data) {
-        if(self::$config->get("system-debug-logs")) {
+        if(self::$config->get("debug-enable-system-logs")) {
             self::log($data);
         }
     }
@@ -875,30 +890,26 @@ class F {
     /**
      * the web server status method
      */
-    public static function webServerStatus($statusCode) {
-        //setup the object
-        self::setup();
-        
-        //set 500 server error status code
-        self::$response->addHeader("HTTP/1.1 ". $statusCode, "");
+    public static function webServerStatus($statusCode, $statusMessage) {
+        //set http status code
+        header("HTTP/1.1 ". $statusCode);
         
         //get page template
-        self::$doc->loadFile(self::filePath("_theme/system/server-status.html"), self::$config->get("root-path"));
+        $statusDoc = new DOMTemplate_Ext();
+        $statusDoc->loadFile(self::filePath("_theme/system/server-status.html"), self::$config->get("root-path"));
         
         //set some binders
-        self::$doc->domBinders["status-code"] = $statusCode;
-        self::$doc->domBinders["mail-to-email"] = self::$config->get("admin-email");
-        self::$doc->domBinders["mail-to-href"] = "mailto:". self::$config->get("admin-email");
-        if($statusCode == 404) {
-            self::$doc->domBinders["status-message"] = "Page Not Found";
-        }
+        $statusDoc->domBinders["status-code"] = $statusCode;
+        $statusDoc->domBinders["status-message"] = $statusMessage;
+        $statusDoc->domBinders["mail-to-email"] = F::$config->get("admin-email");
+        $statusDoc->domBinders["mail-to-href"] = "mailto:". self::$config->get("admin-email");
+        $statusDoc->finalBind(F::$engineArgs);
         
-        //do data binding
-        self::$doc->bindResources();
-        self::$doc->finalBind();
+        //show screen
+        print($statusDoc->toString());
         
-        //finalize request
-        self::$response->finalize(self::$doc->toString());
+        //that's all folks
+        exit;
     }
     
     /**

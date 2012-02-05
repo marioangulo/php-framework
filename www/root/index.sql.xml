@@ -10,12 +10,6 @@
     <command id="total-history-count">
         SELECT FORMAT(COUNT(1), 0) FROM user_history
     </command>
-    <command id="total-error-count">
-        SELECT FORMAT(COUNT(1), 0) FROM error
-    </command>
-    <command id="date-of-oldest-error">
-        SELECT IFNULL(DATE_FORMAT(MIN(timestamp_created), '%c/%e/%y'), '---') FROM error
-    </command>
     <command id="most-active-users">
         SELECT 
             user.id,
@@ -40,17 +34,6 @@
             LEFT JOIN user ON user_history.fk_user_id = user.id
         ORDER BY user_history.id DESC
         LIMIT 10
-    </command>
-    <command id="recent-errors">
-        SELECT 
-            error.id,
-            CONCAT('root/errors/details.html?id=', error.id) AS url,
-            CONCAT(LEFT(error.error_message, 75), '...') AS error_message,
-            TIMESTAMPDIFF(SECOND, error.timestamp_created, '#_now_#') AS seconds_ago
-        FROM 
-            error
-        ORDER BY error.id DESC
-        LIMIT 5
     </command>
 </commands>
 </sql>

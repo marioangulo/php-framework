@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <sql>
-    <commands>
-        <command id="lookup-login">
-            SELECT 
-                user.id, 
-                user.username,
-                user.timezone
-            FROM user
-            WHERE
-                user.username = '#username#'
-                AND user.password = MD5('#password#')
-                AND is_active = 'yes'
-        </command>
-    </commands>
+<commands>
+    <command id="lookup-login">
+        SELECT 
+            user.id, 
+            user.username,
+            user.timezone
+        FROM user
+        WHERE
+            user.username = '#username#'
+            AND user.password = MD5('#password#')
+            AND is_active = 'yes'
+    </command>
+</commands>
 </sql>

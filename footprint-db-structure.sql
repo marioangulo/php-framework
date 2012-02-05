@@ -5,9 +5,9 @@
 # http://www.sequelpro.com/
 # http://code.google.com/p/sequel-pro/
 #
-# Host: 72.3.204.169 (MySQL 5.0.77-log)
-# Database: 454771_devgrounds
-# Generation Time: 2011-09-16 07:31:57 +0000
+# Host: 127.0.0.1 (MySQL 5.5.17)
+# Database: footprint
+# Generation Time: 2012-02-05 02:16:27 +0000
 # ************************************************************
 
 
@@ -26,11 +26,11 @@
 DROP TABLE IF EXISTS `account`;
 
 CREATE TABLE `account` (
-  `id` int(10) unsigned NOT NULL auto_increment,
-  `fk_user_id` int(10) unsigned NOT NULL default '0',
-  `name_first` varchar(45) NOT NULL default '',
-  `name_last` varchar(45) NOT NULL default '',
-  PRIMARY KEY  (`id`),
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `fk_user_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `name_first` varchar(45) NOT NULL DEFAULT '',
+  `name_last` varchar(45) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
   KEY `fk_user_id` (`fk_user_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1001 DEFAULT CHARSET=utf8;
 
@@ -42,11 +42,11 @@ CREATE TABLE `account` (
 DROP TABLE IF EXISTS `admin`;
 
 CREATE TABLE `admin` (
-  `id` int(10) unsigned NOT NULL auto_increment,
-  `fk_user_id` int(10) unsigned NOT NULL default '0',
-  `name_first` varchar(45) NOT NULL default '',
-  `name_last` varchar(45) NOT NULL default '',
-  PRIMARY KEY  (`id`),
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `fk_user_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `name_first` varchar(45) NOT NULL DEFAULT '',
+  `name_last` varchar(45) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
   KEY `fk_user_id` (`fk_user_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1001 DEFAULT CHARSET=utf8;
 
@@ -58,36 +58,12 @@ CREATE TABLE `admin` (
 DROP TABLE IF EXISTS `category`;
 
 CREATE TABLE `category` (
-  `id` int(11) NOT NULL auto_increment,
-  `fk_pivot_table` varchar(255) default '',
-  `name` varchar(255) default '',
-  `is_active` enum('yes','no') default 'yes',
-  PRIMARY KEY  (`id`),
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `fk_pivot_table` varchar(255) DEFAULT '',
+  `name` varchar(255) DEFAULT '',
+  `is_active` enum('yes','no') DEFAULT 'yes',
+  PRIMARY KEY (`id`),
   KEY `fk_pivot_table` (`fk_pivot_table`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
-
-# Dump of table error
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `error`;
-
-CREATE TABLE `error` (
-  `id` int(10) unsigned NOT NULL auto_increment,
-  `application` tinytext NOT NULL,
-  `source` text NOT NULL,
-  `error_message` text NOT NULL,
-  `debug_log` text NOT NULL,
-  `stack_trace` text NOT NULL,
-  `request_url` text NOT NULL,
-  `request_get` text NOT NULL,
-  `request_post` text NOT NULL,
-  `request_cookie` text NOT NULL,
-  `request_session` text NOT NULL,
-  `environment_variables` text NOT NULL,
-  `timestamp_created` datetime NOT NULL default '0000-00-00 00:00:00',
-  PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -98,11 +74,11 @@ CREATE TABLE `error` (
 DROP TABLE IF EXISTS `ip_access`;
 
 CREATE TABLE `ip_access` (
-  `id` int(10) unsigned NOT NULL auto_increment,
-  `ip_address` varchar(16) NOT NULL default '',
-  `is_active` enum('yes','no') NOT NULL default 'yes',
-  `description` varchar(255) NOT NULL default '',
-  PRIMARY KEY  (`id`)
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `ip_address` varchar(16) NOT NULL DEFAULT '',
+  `is_active` enum('yes','no') NOT NULL DEFAULT 'yes',
+  `description` varchar(255) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 LOCK TABLES `ip_access` WRITE;
@@ -122,13 +98,13 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `note`;
 
 CREATE TABLE `note` (
-  `id` int(11) NOT NULL auto_increment,
-  `fk_user_id` int(11) NOT NULL default '0',
-  `fk_pivot_table` varchar(64) NOT NULL default '',
-  `fk_pivot_id` int(11) NOT NULL default '0',
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `fk_user_id` int(11) NOT NULL DEFAULT '0',
+  `fk_pivot_table` varchar(64) NOT NULL DEFAULT '',
+  `fk_pivot_id` int(11) NOT NULL DEFAULT '0',
   `data` text NOT NULL,
-  `timestamp_created` datetime NOT NULL default '0000-00-00 00:00:00',
-  PRIMARY KEY  (`id`),
+  `timestamp_created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`),
   KEY `pivot` (`fk_pivot_table`,`fk_pivot_id`),
   KEY `fk_user_id` (`fk_user_id`),
   KEY `timestamp_created` (`timestamp_created`)
@@ -142,11 +118,11 @@ CREATE TABLE `note` (
 DROP TABLE IF EXISTS `status`;
 
 CREATE TABLE `status` (
-  `id` int(10) unsigned NOT NULL auto_increment,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `fk_pivot_table` varchar(45) NOT NULL,
-  `is_active` enum('yes','no') NOT NULL default 'yes',
+  `is_active` enum('yes','no') NOT NULL DEFAULT 'yes',
   `name` varchar(45) NOT NULL,
-  PRIMARY KEY  (`id`),
+  PRIMARY KEY (`id`),
   KEY `fk_pivot_table` (`fk_pivot_table`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
@@ -158,13 +134,13 @@ CREATE TABLE `status` (
 DROP TABLE IF EXISTS `status_log`;
 
 CREATE TABLE `status_log` (
-  `id` int(10) unsigned NOT NULL auto_increment,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `fk_status_id` int(10) unsigned NOT NULL,
   `fk_pivot_table` varchar(45) NOT NULL,
   `fk_pivot_id` int(10) unsigned NOT NULL,
   `fk_user_id` int(10) unsigned NOT NULL,
   `timestamp_created` datetime NOT NULL,
-  PRIMARY KEY  (`id`),
+  PRIMARY KEY (`id`),
   KEY `fk_status_id` (`fk_status_id`),
   KEY `fk_pivot` (`fk_pivot_table`,`fk_pivot_id`),
   KEY `fk_user_id` (`fk_user_id`),
@@ -179,11 +155,11 @@ CREATE TABLE `status_log` (
 DROP TABLE IF EXISTS `tag`;
 
 CREATE TABLE `tag` (
-  `id` int(10) unsigned NOT NULL auto_increment,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `fk_pivot_table` varchar(45) NOT NULL,
-  `is_active` enum('yes','no') NOT NULL default 'yes',
+  `is_active` enum('yes','no') NOT NULL DEFAULT 'yes',
   `name` varchar(45) NOT NULL,
-  PRIMARY KEY  (`id`),
+  PRIMARY KEY (`id`),
   KEY `fk_pivot_table` (`fk_pivot_table`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
@@ -212,14 +188,14 @@ CREATE TABLE `tag_data` (
 DROP TABLE IF EXISTS `user`;
 
 CREATE TABLE `user` (
-  `id` int(10) unsigned NOT NULL auto_increment,
-  `is_active` enum('yes','no') NOT NULL default 'no',
-  `username` varchar(45) NOT NULL default '',
-  `password` varchar(45) NOT NULL default '',
-  `session_id` varchar(45) NOT NULL default '',
-  `email` varchar(128) NOT NULL default '',
-  `timezone` varchar(90) NOT NULL default 'UTC',
-  PRIMARY KEY  (`id`),
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `is_active` enum('yes','no') NOT NULL DEFAULT 'no',
+  `username` varchar(45) NOT NULL DEFAULT '',
+  `password` varchar(45) NOT NULL DEFAULT '',
+  `session_id` varchar(45) NOT NULL DEFAULT '',
+  `email` varchar(128) NOT NULL DEFAULT '',
+  `timezone` varchar(90) NOT NULL DEFAULT 'UTC',
+  PRIMARY KEY (`id`),
   KEY `username` (`username`),
   KEY `session_id` (`session_id`),
   KEY `email` (`email`)
@@ -242,13 +218,13 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `user_action_log`;
 
 CREATE TABLE `user_action_log` (
-  `id` int(10) unsigned NOT NULL auto_increment,
-  `fk_user_id` int(10) unsigned NOT NULL default '0',
-  `fk_pivot_table` varchar(45) NOT NULL default '',
-  `fk_pivot_id` int(10) unsigned NOT NULL default '0',
-  `action` varchar(255) NOT NULL default '',
-  `timestamp_created` datetime NOT NULL default '0000-00-00 00:00:00',
-  PRIMARY KEY  (`id`),
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `fk_user_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `fk_pivot_table` varchar(45) NOT NULL DEFAULT '',
+  `fk_pivot_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `action` varchar(255) NOT NULL DEFAULT '',
+  `timestamp_created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`),
   KEY `fk_user_id` (`fk_user_id`),
   KEY `fk_pivot` (`fk_pivot_table`,`fk_pivot_id`),
   KEY `timestamp_created` (`timestamp_created`)
@@ -262,12 +238,12 @@ CREATE TABLE `user_action_log` (
 DROP TABLE IF EXISTS `user_group`;
 
 CREATE TABLE `user_group` (
-  `id` int(10) unsigned NOT NULL auto_increment,
-  `fk_category_id` int(10) unsigned NOT NULL default '0',
-  `is_active` enum('yes','no') NOT NULL default 'no',
-  `name` varchar(45) NOT NULL default '',
-  `description` varchar(255) NOT NULL default '',
-  PRIMARY KEY  (`id`),
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `fk_category_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `is_active` enum('yes','no') NOT NULL DEFAULT 'no',
+  `name` varchar(45) NOT NULL DEFAULT '',
+  `description` varchar(255) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
   KEY `fk_category_id` (`fk_category_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
@@ -290,11 +266,11 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `user_group_category`;
 
 CREATE TABLE `user_group_category` (
-  `id` int(10) unsigned NOT NULL auto_increment,
-  `is_active` enum('yes','no') NOT NULL default 'yes',
-  `name` varchar(45) NOT NULL default '',
-  `description` varchar(255) NOT NULL default '',
-  PRIMARY KEY  (`id`)
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `is_active` enum('yes','no') NOT NULL DEFAULT 'yes',
+  `name` varchar(45) NOT NULL DEFAULT '',
+  `description` varchar(255) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 LOCK TABLES `user_group_category` WRITE;
@@ -302,7 +278,7 @@ LOCK TABLES `user_group_category` WRITE;
 
 INSERT INTO `user_group_category` (`id`, `is_active`, `name`, `description`)
 VALUES
-	(1,'yes','Footprint','This is a footprint user group category.');
+	(1,'yes','Default','This is a default user group category.');
 
 /*!40000 ALTER TABLE `user_group_category` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -314,13 +290,13 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `user_history`;
 
 CREATE TABLE `user_history` (
-  `id` int(10) unsigned NOT NULL auto_increment,
-  `fk_user_id` int(10) unsigned NOT NULL default '0',
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `fk_user_id` int(10) unsigned NOT NULL DEFAULT '0',
   `details` text NOT NULL,
-  `url` varchar(1024) NOT NULL default '',
-  `ip_address` varchar(16) NOT NULL default '',
-  `timestamp_created` datetime NOT NULL default '0000-00-00 00:00:00',
-  PRIMARY KEY  (`id`),
+  `url` varchar(1024) NOT NULL DEFAULT '',
+  `ip_address` varchar(16) NOT NULL DEFAULT '',
+  `timestamp_created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`),
   KEY `fk_user_id` (`fk_user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -332,13 +308,13 @@ CREATE TABLE `user_history` (
 DROP TABLE IF EXISTS `user_membership`;
 
 CREATE TABLE `user_membership` (
-  `id` int(10) unsigned NOT NULL auto_increment,
-  `fk_user_id` int(10) unsigned NOT NULL default '0',
-  `fk_group_id` int(10) unsigned NOT NULL default '0',
-  `is_default` enum('yes','no') NOT NULL default 'no',
-  `timestamp_created` datetime NOT NULL default '0000-00-00 00:00:00',
-  `timestamp_cancelled` datetime NOT NULL default '0000-00-00 00:00:00',
-  PRIMARY KEY  (`id`),
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `fk_user_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `fk_group_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `is_default` enum('yes','no') NOT NULL DEFAULT 'no',
+  `timestamp_created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `timestamp_cancelled` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`),
   KEY `fk_user_id` (`fk_user_id`),
   KEY `fk_group_id` (`fk_group_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
@@ -360,12 +336,12 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `user_permission`;
 
 CREATE TABLE `user_permission` (
-  `id` int(10) unsigned NOT NULL auto_increment,
-  `fk_security_id` int(10) unsigned NOT NULL default '0',
-  `fk_user_id` int(10) unsigned NOT NULL default '0',
-  `fk_group_id` int(10) unsigned NOT NULL default '0',
-  `permit` enum('yes','no') NOT NULL default 'no',
-  PRIMARY KEY  (`id`),
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `fk_security_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `fk_user_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `fk_group_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `permit` enum('yes','no') NOT NULL DEFAULT 'no',
+  PRIMARY KEY (`id`),
   KEY `fk_security_id` (`fk_security_id`),
   KEY `fk_user_id` (`fk_user_id`),
   KEY `fk_group_id` (`fk_group_id`)
@@ -391,11 +367,11 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `user_security`;
 
 CREATE TABLE `user_security` (
-  `id` int(10) unsigned NOT NULL auto_increment,
-  `dk_id_parent` int(10) unsigned NOT NULL default '0',
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `dk_id_parent` int(10) unsigned NOT NULL DEFAULT '0',
   `name` varchar(45) NOT NULL,
-  `description` varchar(255) NOT NULL default '',
-  PRIMARY KEY  (`id`),
+  `description` varchar(255) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
   KEY `dk_id_parent` (`dk_id_parent`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1004 DEFAULT CHARSET=utf8;
 

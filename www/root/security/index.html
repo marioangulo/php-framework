@@ -7,18 +7,20 @@
         <meta name="permission-id" content="1001" />
     </head>
     <body>
-        <div xslt-region="nav-trail">
-            <div class="well">
-                <div class="float-right">
-                    <a id="button_new" data-bind-attr="href=button_new" class="btn success">create New</a>
-                </div>
-                <h3 data-bind-function="Helpers::getBirdSeed">User Groups</h3>
+        <div class="row">
+            <div class="span12">
+                <h1 class="page-header">
+                    <div class="pull-right">
+                        <a  data-bind-attr="href=button_new" class="btn btn-success">Create New</a>
+                    </div>
+                    <span data-bind-function="Helpers::getBirdSeed">Security</span>
+                </h1>
             </div>
         </div>
            
         <div data-bind-results="get-records" data-bind-paging="true">
-            <table class="zebra-striped">
-                <thead class="highlight">
+            <table class="table table-striped table-bordered">
+                <thead>
                     <tr>
                         <th>&#160;</th>
                         <th>ID</th>

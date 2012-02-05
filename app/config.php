@@ -19,7 +19,7 @@ F::$config->set("environment", "local");
  * project settings
  */
 F::$config->set("project-name", "MyProject");
-F::$config->set("company-name", "My Company, Inc.");
+F::$config->set("company-name", "Acme, Inc.");
 F::$config->set("copyright-year", date("Y"));
 F::$config->set("admin-email", "admin@localhost");
 
@@ -34,14 +34,16 @@ F::$config->set("project-root-cache", dirname(__FILE__) ."/../www-cache/");
 /**
  * email and smtp credentials
  */
-F::$config->set("email-from-address", "noreply@localhost");
+F::$config->set("email-from-address", "from@localhost");
 F::$config->set("email-from-name", "From Name");
 F::$config->set("email-host", "mail.localhost");
 F::$config->set("email-username", "username");
 F::$config->set("email-password", "password");
+F::$config->set("email-port", "465");
+F::$config->set("email-protocol", "ssl");
 
 /**
- * set the execution mode
+ * set the execution mode (command line or web request)
  */
 if(!isset($_SERVER["HTTP_HOST"])) {
     //command line
@@ -60,71 +62,25 @@ else {
 }
 
 /**
- * local environment
+ * enable/disable cache
  */
-if(F::$config->get("environment") == "local") {
-    //enable/disable cache
-    F::$config->set("cache-generation-enabled", false);
-    F::$config->set("cache-check-enabled", false);
-    
-    //extra smtp settings
-    F::$config->set("email-port", "465");
-    F::$config->set("email-protocol", "ssl");
-    
-    //debug
-    F::$config->set("log-errors", true);
-    F::$config->set("email-errors", true);
-    F::$config->set("show-stack-trace", true);
-    F::$config->set("system-debug-logs", false);
-    
-    //mysql
-    F::$config->set("mysql-host", "127.0.0.1");
-    F::$config->set("mysql-username", "root");
-    F::$config->set("mysql-password", "");
-    F::$config->set("mysql-schema", "dbschema");
-}
+F::$config->set("cache-generation-enabled", false);
+F::$config->set("cache-check-enabled", false);
 
 /**
- * dev environment
+ * debug
  */
-if(F::$config->get("environment") == "dev") {
-    //enable/disable cache
-    F::$config->set("cache-generation-enabled", false);
-    F::$config->set("cache-check-enabled", false);
-    
-    //debug
-    F::$config->set("log-errors", true);
-    F::$config->set("email-errors", true);
-    F::$config->set("show-stack-trace", false);
-    F::$config->set("system-debug-logs", false);
-    
-    //mysql
-    F::$config->set("mysql-host", "devserver");
-    F::$config->set("mysql-username", "dev-user");
-    F::$config->set("mysql-password", "dev-password");
-    F::$config->set("mysql-schema", "dbschema");
-}
+F::$config->set("debug-email-errors", true);
+F::$config->set("debug-show-stack-trace", true);
+F::$config->set("debug-enable-system-logs", false);
 
 /**
- * production environment
+ * mysql
  */
-if(F::$config->get("environment") == "production") {
-    //enable/disable cache
-    F::$config->set("cache-generation-enabled", true);
-    F::$config->set("cache-check-enabled", true);
-    
-    //debug
-    F::$config->set("log-errors", true);
-    F::$config->set("email-errors", true);
-    F::$config->set("show-stack-trace", false);
-    F::$config->set("system-debug-logs", false);
-    
-    //mysql
-    F::$config->set("mysql-host", "liveserver");
-    F::$config->set("mysql-username", "live-user");
-    F::$config->set("mysql-password", "live-password");
-    F::$config->set("mysql-schema", "dbschema");
-}
+F::$config->set("mysql-host", "127.0.0.1");
+F::$config->set("mysql-username", "root");
+F::$config->set("mysql-password", "");
+F::$config->set("mysql-schema", "footprint");
 
 /**
  * router settings
@@ -133,6 +89,8 @@ F::$config->set("router-route-file", ".route.php");
 F::$config->set("router-index-file", "index");
 F::$config->set("router-enforced-file-extension", "html");
 F::$config->set("router-fallback-function", "System::defaultRouteFallback");
+F::$config->set("router-enable-xff", false);
+F::$config->set("router-acceptable-xff-ips", "");
 
 
 /**

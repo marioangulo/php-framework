@@ -24,11 +24,16 @@ class WebResponse_Ext extends WebResponse {
      * @param string $name
      * @param string $value
      */
-    public function addHeader($name, $value) {
+    public function addHeader($name, $value = null) {
         //keep track of them in the headers
         $this->headers[strtolower($name)] = $value;
         
         //set http header
-        header($name .": ". $value);
+        if(!isset($value)) {
+            header($name);
+        }
+        else {
+            header($name .": ". $value);
+        }
     }
 }

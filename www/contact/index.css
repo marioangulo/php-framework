@@ -1,0 +1,23 @@
+/**
+ * page styles
+ */
+.well {
+    text-align: center;
+}
+address {
+    margin-bottom: 0px;
+}
+iframe {
+    margin-bottom: 10px;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+}
+.btn-float {
+    position: relative;
+}
+.btn-float .btn {
+    top: -55px;
+    right: 7px;
+    position: absolute;
+}

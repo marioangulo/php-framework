@@ -5,10 +5,6 @@ class Page {
      * handles the before actions event
      */
     public static function eventBeforeActions() {
-        //buttons
-        F::$doc->domBinders["button_download"] = F::$engineNamespace .".html?action=Download&". F::$request->queryString();
-        F::$doc->domBinders["button_delete"] = F::$engineNamespace .".html?action=Delete&". F::$request->queryString();
-        
         //date_from/to
         F::$db->keyBinders["_date_from_"] = F::$dateTime->now()->parse(F::$request->input("date_from"))->toSQLString("yyyy-MM-dd");
         F::$db->keyBinders["_date_to_"] = F::$dateTime->now()->parse(F::$request->input("date_to"))->toSQLString("yyyy-MM-dd");
@@ -65,6 +61,6 @@ class Page {
         F::$db->loadCommand("delete-user-history", F::$engineArgs);
         F::$db->executeNonQuery();
         
-        F::$response->redirectURL = F::url(F::$engineNamespace .".html");
+        F::$warnings->add("Deleted filtered history.");
     }
 }

@@ -17,6 +17,9 @@
     right: 7px;
     position: absolute;
 }
+.admin-notes [name='note_data'] {
+    margin-bottom: 0px;
+}
 
 .admin-notes .note {
     border-right: 1px solid #ccc;
@@ -41,8 +44,9 @@
     
     border: 1px solid #ccc;
     
-    -webkit-border-radius: 12px;
-    -moz-border-radius: 12px;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
     
     background: #fff;
 }

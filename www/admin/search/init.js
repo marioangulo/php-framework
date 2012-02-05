@@ -10,7 +10,7 @@ var adminSearch = {
      * intializes with the document
      */
     init: function() {
-        $(".topbar form").submit(function(){
+        $(".navbar-fixed-top form").submit(function(){
             return false;
         });
         
@@ -163,9 +163,9 @@ var adminSearch = {
      */
     selectResult: function() {
         //reset all rows
-        $(".global-search-results [data-row]").attr("class", "unselected");
+        $(".global-search-results [data-row]").attr("class", "");
         //highlight this
-        $(".global-search-results [data-row]:eq("+ adminSearch.selectedIndex +")").attr("class", "selected");
+        $(".global-search-results [data-row]:eq("+ adminSearch.selectedIndex +")").attr("class", "active");
     }
 };
 

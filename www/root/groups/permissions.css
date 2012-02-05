@@ -10,6 +10,7 @@ ul.security li {
     padding: 0px;
     list-style: upper-roman;
     margin-left: 15px;
+    margin-bottom: 5px;
 }
 ul.security li ul li {
     list-style: upper-alpha;
@@ -19,4 +20,7 @@ ul.security li ul li ul li {
 }
 ul.security li ul li ul li ul li {
     list-style: circle;
+}
+ul.security select {
+    width: auto;
 }

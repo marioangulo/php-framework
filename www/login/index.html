@@ -7,28 +7,31 @@
     <body>
         <h1 class="page-header">Please Login</h1>
         
-        <span class="footprint_msg">footprint_msg</span>
-        <form method="post" action="">
-            <fieldset>
-                <div class="clearfix">
-                    <label for="username">Username:</label>
-                    <div class="input">
-                        <input name="username" size="30" type="text" data-bind-input="username"/>
-                        <span class="help-inline"></span>
-                    </div>
-                </div>
-                <div class="clearfix">
-                    <label for="password">Password:</label>
-                    <div class="input">
-                        <input name="password" size="30" type="password" data-bind-input="password"/>
-                        <span class="help-inline"></span>
-                    </div>
-                </div>
-            </fieldset>
-            <div class="actions">
-                <input class="btn primary" type="submit" value="Login" name="action" />
-                <a class="btn" href="login/forgot-password.html">Forgot Password?</a>
+        <div class="row">
+            <div class="span8" data-section="form">
+                <span class="app-alerts">---</span>
+                <form id="form" method="post" action="">
+                    <fieldset>
+                        <div class="control-group">
+                            <label for="username">Username:</label>
+                            <div class="controls">
+                                <input name="username" size="30" type="text" class="span3" data-bind-input="username"/>
+                                <span class="help-inline"></span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label for="password">Password: <a href="login/forgot-password.html">Forgot?</a></label>
+                            <div class="controls">
+                                <input name="password" size="30" type="password" class="span3" data-bind-input="password"/>
+                                <span class="help-inline"></span>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <input id="button_login" class="btn btn-primary" type="button" value="Login" name="action" />
+                        </div>
+                    </fieldset>
+                </form>
             </div>
-        </form>
+        </div>
     </body>
 </html>

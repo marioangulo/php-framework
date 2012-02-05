@@ -204,8 +204,8 @@ class DOMTemplate_Ext extends DOMTemplate {
         }
         
         //setup the extra data binder features
-        F::$doc->domBinders[$resourceID ."-found-rows"] = number_format($tmpFoundRows);
-        F::$doc->domBinders[$resourceID ."-count"] = count($data);
+        $this->domBinders[$resourceID ."-found-rows"] = number_format($tmpFoundRows);
+        $this->domBinders[$resourceID ."-count"] = count($data);
         
         //cleanup empty columns
         if($totalColumns > 1) {
@@ -230,9 +230,12 @@ class DOMTemplate_Ext extends DOMTemplate {
     /**
      * runs the final bind on the document
      */
-    public function finalBind() {
+    public function finalBind($data = null) {
+        if(!isset($data)) {
+            $data = array();
+        }
         //we merge input and dom-binders for a final binding
-        F::$doc->dataBinder(array_merge(F::$engineArgs, F::$doc->domBinders));
+        $this->dataBinder(array_merge($data, $this->domBinders));
     }
     
     /**
@@ -274,8 +277,8 @@ class DOMTemplate_Ext extends DOMTemplate {
         }
         
         //remove binders
-        F::$doc->removeAttribute($node, "data-bind-id");
-        F::$doc->removeAttribute($node, "data-bind-rows");
+        $this->removeAttribute($node, "data-bind-id");
+        $this->removeAttribute($node, "data-bind-rows");
     }
     
     /**
@@ -330,11 +333,11 @@ class DOMTemplate_Ext extends DOMTemplate {
         }
         
         //bind the data
-        F::$doc->dataBinder($myBinders, $form);
+        $this->dataBinder($myBinders, $form);
         
         //remove binders
-        F::$doc->removeAttribute($node, "data-bind-id");
-        F::$doc->removeAttribute($node, "data-bind-form");
+        $this->removeAttribute($node, "data-bind-id");
+        $this->removeAttribute($node, "data-bind-form");
     }
     
     /**
@@ -535,7 +538,7 @@ class DOMTemplate_Ext extends DOMTemplate {
         }
         
         //errors
-        $chunk->getNodesByAttribute("class", "footprint_msg")->setInnerHTML(F::getWebAlerts());
+        $chunk->getNodesByAttribute("class", "app-alerts")->setInnerHTML(F::getWebAlerts());
     }
     
     /**
@@ -556,18 +559,20 @@ class DOMTemplate_Ext extends DOMTemplate {
             $chunk = $this->traverse("//*[@data-bind-id='". $id ."']")->getDOMChunk();
         }
         
-        $errorNodes = (array)$chunk->traverse("//*[@class='footprint_msg']//*[@class='alert-message error']//p[@for]")->getNodes();
+        $errorNodes = (array)$chunk->traverse("//*[@class='app-alerts']//*[@class='alert alert-block alert-error']//p[@for]")->getNodes();
         foreach($errorNodes as $error) {
             $resourceID = $error->getAttribute("for");
-            $chunk->traverse("//*[@name='". $resourceID ."']")->getNode()->parentNode->parentNode->setAttribute("class", "clearfix error");
-            $chunk->traverse("//*[@name='". $resourceID ."']/parent::*//*[@class='help-inline']")->setInnerText($error->textContent);
-            $chunk->remove($error);
+            $forNode = $chunk->traverse("//*[@name='". $resourceID ."']")->getNode();
+            if($forNode) {
+                $forNode->parentNode->parentNode->setAttribute("class", "control-group error");
+                $chunk->traverse("//*[@name='". $resourceID ."']/parent::*//*[@class='help-inline']")->setInnerText($error->textContent);
+                $chunk->remove($error);
+            }
         }
-        
         
         //if there are no more messages remove the alerts
         if(F::$errors->count() > 0) {
-            $errorNodes = $chunk->traverse("//*[@class='footprint_msg']//*[@class='alert-message error']//p")->getNodes();
+            $errorNodes = $chunk->traverse("//*[@class='app-alerts']//*[@class='alert-message error']//p")->getNodes();
             if(count($errorNodes) == 0) {
                 $errorNodes = $chunk->traverse("//*[@class='alert-message error']")->remove();
             }
@@ -689,11 +694,6 @@ class DOMTemplate_Ext extends DOMTemplate {
             $chunk->getNodesByDataSet("label", "paging")->remove();
         }
         else {
-            //show the data
-            $chunk->traverse("//*[@data-label='pager_record_start']")->setInnerText((F::$dataPager->getRecordToStart() + (F::$dataPager->totalRecords == 0 ? 0 : 1)));
-            $chunk->traverse("//*[@data-label='pager_record_end']")->setInnerText(F::$dataPager->getRecordToStop());
-            $chunk->traverse("//*[@data-label='pager_total_records']")->setInnerText(F::$dataPager->totalRecords);
-            
             //set storage data
             $chunk->traverse("//*[@data-label='paging']")->setAttribute("data-current-page", F::$dataPager->currentPage);
             
@@ -704,7 +704,6 @@ class DOMTemplate_Ext extends DOMTemplate {
             else {
                 $chunk->traverse("//*[@data-label='pager_prev']/a")->setAttribute("data-page", $resourceID ."-page=". F::$dataPager->getPreviousPage());
             }
-            
             if(F::$dataPager->hasNextPage() == false) {
                 $chunk->traverse("//*[@data-label='pager_next']")->setAttribute("class", "disabled");
             }
@@ -713,24 +712,19 @@ class DOMTemplate_Ext extends DOMTemplate {
             }
             
             //replace paging options
-            $dropDown = new WebFormMenu("tmp", 1, 0);
-            $dropDown->addSelectedValue($resourceID ."-page=". F::$request->input($resourceID ."-page"));
-            
+            $jumpChunk = $chunk->traverse("//*[@data-label='pager_blank']")->getDOMChunk();
             F::$dataPager->linkLoopOffset = 25;
             for($i = F::$dataPager->getLinkLoopStart() ; $i <= F::$dataPager->getLinkLoopStop() ; $i++) {
-                $dropDown->addOption("Page ". $i ."/". F::$dataPager->getTotalPages(), $resourceID ."-page=". $i);
+                $jumpChunk->begin();
+                if($i == F::$dataPager->currentPage) {
+                    $jumpChunk->root()->setAttribute("class", "active");
+                }
+                $jumpChunk->getNodesByTagName("a")->setAttribute("data-page", $resourceID ."-page=". $i);
+                $jumpChunk->getNodesByTagName("a")->setInnerText("Page ". $i ."/". F::$dataPager->getTotalPages());
+                $jumpChunk->root()->removeAttribute("data-label");
+                $jumpChunk->end();
             }
-            $chunk->traverse("//*[@data-label='page_jump']")->setInnerHTML($dropDown->getOptionTags());
-            
-            //replace the timer
-            if(F::$timer->timeSpent == 0) {
-                //remove entire row
-                $chunk->traverse("//*[@data-label='timer_data']")->remove();
-            }
-            else {
-                //replace query time
-                $chunk->traverse("//*[@data-label='query_time']")->setInnerText(number_format(F::$timer->timeSpent, 5));
-            }
+            $jumpChunk->render();
         }
     }
 }

@@ -13,15 +13,16 @@
                 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
                 
                 <!--js-->
-                <script src="_theme/common/jquery/jquery-1.6.3.min.js" language="javascript"></script>
+                <script src="_theme/common/jquery/jquery-1.7.1.min.js" language="javascript"></script>
                 <script src="_theme/common/jquery/jquery-ui-1.8.16.custom.min.js" language="javascript"></script>
-                <script src="_theme/common/utility.js" language="javascript"></script>
+                <script src="_theme/common/bootstrap/js/bootstrap.min.js" language="javascript"></script>
+                <script src="_theme/common/footprint.js" language="javascript"></script>
                 
-                <!--XSLTEngine::head-->
+                <!--xslt::head-->
                 <xsl:apply-templates select="head"/>
             </head>
             <body>
-                <!--XSLTEngine::body-->
+                <!--xslt::body-->
                 <xsl:apply-templates select="body"/>
             </body>
         </html>

@@ -4,7 +4,7 @@ class Page {
     /**
      * handles the add user action
      */
-    public static function actionAddUser() {
+    public static function actionAdd() {
         //validate
         if(F::$request->input("fk_user_id") == "0" || F::$request->input("fk_user_id") == "") {
             F::$errors->add("You must select a user.");
@@ -21,7 +21,7 @@ class Page {
             F::$db->loadCommand("add-user", F::$engineArgs);
             F::$db->executeNonQuery();
             
-            F::$response->redirectURL = F::url(F::$engineNamespace .".html?id=". F::$request->input("id"));
+            F::$alerts->add("Changes saved.");
         }
     }
     
@@ -32,7 +32,7 @@ class Page {
         F::$db->loadCommand("update", F::$engineArgs);
         F::$db->executeNonQuery();
         
-        F::$response->redirectURL = F::url(F::$engineNamespace .".html?id=". F::$request->input("id"));
+        F::$alerts->add("Changes saved.");
     }
     
     /**
@@ -42,6 +42,6 @@ class Page {
         F::$db->loadCommand("delete", F::$engineArgs);
         F::$db->executeNonQuery();
         
-        F::$response->redirectURL = F::url(F::$engineNamespace .".html?id=". F::$request->input("id"));
+        F::$warnings->add("Deleted permissions.");
     }
 }

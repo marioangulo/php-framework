@@ -8,8 +8,8 @@ class Page {
         //user id magic
         F::$db->keyBinders["fk_user_id"] = F::$admin->getUserID(F::$request->input("id"));
         
-        //defaults
-        F::$engineArgs["timezone"] = "UTC";
+        //default timezone
+        F::$engineArgs["timezone"] = F::$request->input("timezone", "UTC");
     }
     
     /**
@@ -82,7 +82,7 @@ class Page {
             F::$db->executeNonQuery();
             $tmpAdminID = F::$db->getLastInsertID();
             
-            F::$response->redirectURL = F::url(F::$engineNamespace .".html?id=". $tmpAdminID);
+            F::$responseJSON["id"] = $tmpAdminID;
         }
     }
     
@@ -101,7 +101,7 @@ class Page {
             F::$db->loadCommand("update-admin", F::$engineArgs);
             F::$db->executeNonQuery();
             
-            F::$response->redirectURL = F::url(F::$engineNamespace .".html?id=". F::$request->input("id"));
+            F::$alerts->add("Changes saved.");
         }
     }
     
@@ -123,10 +123,13 @@ class Page {
             F::$db->loadCommand("delete-user", F::$engineArgs);
             F::$db->executeNonQuery();
             
+            F::$db->loadCommand("delete-admin-notes", F::$engineArgs);
+            F::$db->executeNonQuery();
+            
             F::$db->loadCommand("delete-admin", F::$engineArgs);
             F::$db->executeNonQuery();
             
-            F::$response->redirectURL = F::url("admin/administrators/index.html");
+            F::$responseJSON["delete"] = true;
         }
     }
 }

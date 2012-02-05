@@ -33,8 +33,10 @@ class Page {
         }
         if(count($listItems) == 0) {
             $newLINode = F::$doc->domDocument->createElement("li");
+            $newAnchorNode = F::$doc->domDocument->createElement("a");
             $text = F::$doc->domDocument->createTextNode('no results found');
-            $newLINode->appendChild($text);
+            $newAnchorNode->appendChild($text);
+            $newLINode->appendChild($newAnchorNode);
             F::$doc->appendChild($newULNode, $newLINode);
         }
         

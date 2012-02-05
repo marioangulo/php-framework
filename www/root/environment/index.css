@@ -2,7 +2,7 @@
  * page styles
  */
 .varname {
-    text-align: right;
+    text-align: right !important;
 }
 iframe {
     width: 100%;

@@ -34,14 +34,15 @@ class Page {
             $username = F::$db->getDataString();
             
             //build up message
-            $message = new DOMTemplate();
+            $message = new DOMTemplate_Ext();
             $message->loadFile(F::filePath("/login/forgot-password.email.html"));
-            $message->getNodesByDataSet("label", "username")->setInnerText($username);
-            $message->getNodesByDataSet("label", "reset_link")->setAttribute("href", F::fullURI("login/reset-password.html?s=". $newSessionID));
+            $message->domBinders["username"] = $username;
+            $message->domBinders["reset_link"] = F::fullURI("login/reset-password.html?s=". $newSessionID);
+            $message->finalBind(F::$engineArgs);
             
             //get email ready to send
             F::$emailClient->addTo(F::$request->input("email"));
-            F::$emailClient->subject = "Password Reset Request";
+            F::$emailClient->subject = F::$config->get("project-name") .": Password Reset Request";
             F::$emailClient->message = $message->toString();
             F::$emailClient->isHTML = true;
             
@@ -52,7 +53,7 @@ class Page {
                 
                 //alert user to check email
                 F::$alerts->add("Please check your email for instructions on how to reset your password.");
-                F::$doc->getNodeByID("reset")->remove();
+                F::$doc->getNodeByID("form")->remove();
             }
             catch(Exception $e){
                 F::$errors->add("Email failed to send.");

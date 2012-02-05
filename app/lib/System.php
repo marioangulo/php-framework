@@ -197,132 +197,83 @@ class System {
      * the web error handler
      */
     public static function webErrorHandler() {
-        try {
-            //set 500 server error status code
-            F::$response->addHeader("HTTP/1.1 500","");
+        //collect log data
+        $errorLogData = array();
+        
+        //build data
+            $argCount = func_num_args();
+            $args = func_get_args();
             
-            //get page template
-            F::$doc->loadFile(F::filePath("_theme/system/server-error.html"), F::$config->get("root-path"));
-            
-            //set some binders
-            F::$doc->domBinders["mail-to-email"] = F::$config->get("admin-email");
-            F::$doc->domBinders["mail-to-href"] = "mailto:". F::$config->get("admin-email");
-            
-            //collect log data
-            $errorLogData = array();
-            
-            //build data
-                $argCount = func_num_args();
-                $args = func_get_args();
-                
-                //an exception was called
-                if($argCount == 1){
-                    $exception = $args[0];
-                    $errorLogData["error-message"] = $exception->getMessage();
-                }
-                //an error was called
-                else if($argCount == 5){
-                    $errorLogData["error-message"] = "Error number: ". $args[0] ."-". $args[1] ." in ". $args[2] ." on line number ". $args[3] .".";
-                }
-                
-                //continue building data
-                $errorLogData["application"] = F::$request->serverVariables("SERVER_NAME");
-                $errorLogData["source"] = F::$request->serverVariables("SCRIPT_FILENAME");
-                $errorLogData["url"] = F::$request->serverVariables("REQUEST_URI");
-                $errorLogData["timestamp"] = F::$dateTime->now()->toString();
-                $errorLogData["stack-trace"] = print_r(debug_backtrace(), true);
-                $errorLogData["http-get"] = print_r($_GET, true);
-                $errorLogData["http-post"] = print_r($_POST, true);
-                $errorLogData["session"] = print_r($_SESSION, true);
-                $errorLogData["cookies"] = print_r($_COOKIE, true);
-                $errorLogData["environment"] = print_r($_SERVER, true);
-                $errorLogData["debug-log"] = print_r(F::$debugLog, true);
-                F::$customHashes["log"] = $errorLogData;
-            //end build data
-            
-            //should we show the stack trace on the page?
-            if(F::$config->get("show-stack-trace") == false) {
-                F::$doc->getNodesByDataset("label", "stack-trace")->remove();
+            //an exception was called
+            if($argCount == 1){
+                $exception = $args[0];
+                $errorLogData["error-message"] = $exception->getMessage();
+            }
+            //an error was called
+            else if($argCount == 5){
+                $errorLogData["error-message"] = "Error number: ". $args[0] ."-". $args[1] ." in ". $args[2] ." on line number ". $args[3] .".";
             }
             
-            //should we log the error?
-            if(F::$config->get("log-errors") == true) {
-                F::$db->open();
-                F::$db->sqlCommand = "
-                    INSERT INTO error
-                    SET
-                        application = '#application#',
-                        source = '#source#',
-                        error_message = '#error-message#',
-                        debug_log = '#debug-log#',
-                        stack_trace = '#stack-trace#',
-                        request_url = '#url#',
-                        request_get = '#http-get#',
-                        request_post = '#http-post#',
-                        request_cookie = '#cookies#',
-                        request_session = '#session#',
-                        environment_variables = '#environment#',
-                        timestamp_created = '#timestamp#'
-                ";
-                F::$db->bindKeys($errorLogData);
-                F::$db->executeNonQuery();
-                
-                //replace error id on page
-                F::$doc->domBinders["error-id"] = F::$db->getLastInsertID();
+            //continue building data
+            $errorLogData["application"] = F::$request->serverVariables("SERVER_NAME");
+            $errorLogData["source"] = F::$request->serverVariables("SCRIPT_FILENAME");
+            $errorLogData["url"] = F::$request->serverVariables("REQUEST_URI");
+            $errorLogData["timestamp"] = F::$dateTime->now()->toString();
+            $errorLogData["stack-trace"] = print_r(debug_backtrace(), true);
+            $errorLogData["http-get"] = print_r($_GET, true);
+            $errorLogData["http-post"] = print_r($_POST, true);
+            $errorLogData["session"] = print_r($_SESSION, true);
+            $errorLogData["cookies"] = print_r($_COOKIE, true);
+            $errorLogData["environment"] = print_r($_SERVER, true);
+            $errorLogData["debug-log"] = print_r(F::$debugLog, true);
+        //end build data
+        
+        //should we email the error?
+        if(F::$config->get("debug-email-errors") == true) {
+            //reset
+            F::$emailClient->reset();
+            
+            //get email ready
+            F::$emailClient->addTo(F::$config->get("admin-email"));
+            F::$emailClient->subject = "Server Error @ ". F::$request->serverVariables("SERVER_NAME");
+            F::$emailClient->message = print_r($errorLogData, true);
+            F::$emailClient->isHTML = false;
+            
+            //try to send the email
+            try{
+                //send email
+                F::$emailClient->send();
+                //reset
+                F::$emailClient->reset();
             }
-            else {
-                F::$doc->getNodesByDataset("label", "error-identifier")->remove();
+            catch(Exception $e) {
+                //that sucks
             }
-            
-            //do data binding
-            F::$doc->bindResources();
-            F::$doc->finalBind();
-            
-            //should we email the error?
-            if(F::$config->get("email-errors") == true) {
-                //build up message
-                $message = new DOMTemplate_Ext();
-                $message->loadFile(F::filePath("_theme/system/server-error.email.html"));
-                $message->bindResources($message);
-                $message->dataBinder(F::$engineArgs);
-                
-                //get email ready to send
-                F::$emailClient->addTo(F::$config->get("admin-email"));
-                F::$emailClient->subject = "Server Error @ ". F::$request->serverVariables("SERVER_NAME");
-                F::$emailClient->message = $message->toString();
-                F::$emailClient->isHTML = true;
-                
-                //try to send the email
-                try{
-                    //send email
-                    F::$emailClient->send();
-                    //reset
-                    F::$emailClient->reset();
-                }
-                catch(Exception $e) {
-                    //it didn't get sent
-                }
-            }
-            
-            //never hurts to try closing the database, 
-            F::$db->close();
-            
-            //finalize the request
-            F::$response->finalize(F::$doc->toString());
         }
-        catch(Exception $e) {
-            //never hurts to try closing the database, 
-            F::$db->close();
-            
-            //show something
-            print("<h1>500 Fatal Error (Uncaught)</h1>");
-            print("<h3>". get_class($e)." thrown within the exception handler.</h3> Message: ".$e->getMessage()." on line ".$e->getLine());
-            print("<xmp>". print_r(debug_backtrace(), true) ."</xmp>");
-            
-            //try to email the debug log
-            try { F::emailDebugLog(true); }
-            catch(Exception $e) { /*damn that sucks*/ }
+        
+        //set 500 server error status code
+        header("HTTP/1.1 500 Internal Server Error");
+        
+        //get error page template
+        $errorDoc = new DOMTemplate_Ext();
+        $errorDoc->loadFile(F::filePath("_theme/system/server-error.html"), F::$config->get("root-path"));
+        $errorDoc->domBinders["stack_trace"] = print_r($errorLogData, true);
+        
+        //should we hide the stack trace on the page?
+        if(F::$config->get("debug-show-stack-trace") == false) {
+            $errorDoc->traverse("//*[contains(@class, 'stack_trace')]")->remove();
         }
+        
+        $errorDoc->finalBind();
+        
+        //never hurts to try closing the database
+        F::$db->close();
+            
+        //show error screen
+        print($errorDoc->toString());
+        
+        //that's all folks
+        exit;
     }
     
     /**
@@ -338,7 +289,7 @@ class System {
     public static function webShutdownHandler() {
         $err = error_get_last(); 
         if($err == null) {
-            //do nothing
+            //do nothing, there was no error
         }
         else {
             print_r($err, true); 
@@ -355,7 +306,7 @@ class System {
         }
         //enforce file entension
         else if(Router::$fileExtension != F::$config->get("router-enforced-file-extension")){
-            F::webServerStatus(404);
+            F::webServerStatus(404, "Page Not Found");
         }
         //does an html file exists? if so, then start the engine
         else if(file_exists(Router::$documentRoot . Router::$redirectPath . Router::$redirectResource . ".html")){
@@ -368,7 +319,7 @@ class System {
         //throw error - file not found
         else {
             //if all else fails
-            F::webServerStatus(404);
+            F::webServerStatus(404, "Page Not Found");
         }
     }
 }

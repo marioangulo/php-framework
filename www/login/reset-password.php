@@ -44,7 +44,7 @@ class Page {
             F::$db->executeNonQuery();
             
             F::$alerts->add("Your password has been updated, <a href=\"login/index.html\">login to confirm</a>.");
-            F::$doc->getNodeByID("reset")->remove();
+            F::$doc->getNodeByID("form")->remove();
         }
     }
 }

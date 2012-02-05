@@ -1,48 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <sql>
-    <commands>
-        <command id="duplicate-name-check">
-            SELECT name
-            FROM user_group
-            WHERE
-                name = '#name#'
-                AND fk_category_id = '#fk_category_id#'
-                AND NOT user_group.id = '#id#'
-        </command>
-        <command id="create-new">
-            INSERT INTO user_group
-            SET
-                fk_category_id = '#fk_category_id#',
-                is_active = '#is_active#',
-                name = '#name#',
-                description = '#description#'
-        </command>
-        <command id="update">
-            UPDATE user_group
-            SET
-                fk_category_id = '#fk_category_id#',
-                is_active = '#is_active#',
-                name = '#name#',
-                description = '#description#'
-            WHERE id = '#id#'
-        </command>
-        <command id="delete-permissions">
-            DELETE FROM user_permission WHERE fk_group_id = '#id#'
-        </command>
-        <command id="delete-membership">
-            DELETE FROM user_membership WHERE fk_group_id = '#id#'
-        </command>
-        <command id="delete-group">
-            DELETE FROM user_group WHERE id = '#id#'
-        </command>
-        <command id="get-record">
-            SELECT
-                fk_category_id,
-                is_active,
-                name,
-                description
-            FROM user_group
-            WHERE id = '#id#'
-        </command>
-    </commands>
+<commands>
+    <command id="duplicate-name-check">
+        SELECT name
+        FROM user_group
+        WHERE
+            name = '#name#'
+            AND fk_category_id = '#fk_category_id#'
+            AND NOT user_group.id = '#id#'
+    </command>
+    <command id="create-new">
+        INSERT INTO user_group
+        SET
+            fk_category_id = '#fk_category_id#',
+            is_active = '#is_active#',
+            name = '#name#',
+            description = '#description#'
+    </command>
+    <command id="update">
+        UPDATE user_group
+        SET
+            fk_category_id = '#fk_category_id#',
+            is_active = '#is_active#',
+            name = '#name#',
+            description = '#description#'
+        WHERE id = '#id#'
+    </command>
+    <command id="delete-permissions">
+        DELETE FROM user_permission WHERE fk_group_id = '#id#'
+    </command>
+    <command id="delete-membership">
+        DELETE FROM user_membership WHERE fk_group_id = '#id#'
+    </command>
+    <command id="delete-group">
+        DELETE FROM user_group WHERE id = '#id#'
+    </command>
+    <command id="get-record">
+        SELECT
+            fk_category_id,
+            is_active,
+            name,
+            description
+        FROM user_group
+        WHERE id = '#id#'
+    </command>
+</commands>
 </sql>

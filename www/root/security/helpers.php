@@ -58,13 +58,13 @@ class Helpers {
             //continue getting seed
             if($data["dk_id_parent"] == "0") {
                 //no parent security
-                $tmpTailLink = "<a href=\"". F::url("root/security/index.html") ."\">Security</a> &#8594; ";
+                $tmpTailLink = "<a href=\"". F::url("root/security/index.html") ."\">Security</a> / ";
                 $tmpTailLink .= $tmpThisLink;
             }
             else {
                 //get this parent task first
                 $tmpTailLink .= self::birdSeed($data["dk_id_parent"], $counter + 1);
-                $tmpTailLink .= " &#8594; ". $tmpThisLink;
+                $tmpTailLink .= " / ". $tmpThisLink;
             }
             
             return $tmpTailLink;

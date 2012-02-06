@@ -11,11 +11,6 @@ F::$config = new Config();
 F::$system = new System();
 
 /**
- * set the execution environment
- */
-F::$config->set("environment", "local");
-
-/**
  * project settings
  */
 F::$config->set("project-name", "MyProject");

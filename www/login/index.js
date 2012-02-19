@@ -38,7 +38,7 @@ var Page = {
      * submitForm
      */
     submitForm: function() {
-        F.xhr("&action=Login&data-section=form&"+ $("#form").serialize() +"&return="+ Page.returnURL, function(jResponse){
+        F.xhr("&action=Login&data-section=form&"+ $("#form").serialize() +"&return="+ encodeURIComponent(Page.returnURL), function(jResponse){
             if(jResponse["data"]) {
                 if(jResponse["data"]["redirect"]){ 
                     location.href = jResponse["data"]["redirect"];

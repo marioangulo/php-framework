@@ -48,7 +48,7 @@
             user_history.ip_address,
             user_history.url,
             IF(ISNULL(user.id), '-', user.username) AS username,
-            CONCAT('root/users/add-edit.html?id=', user.id) AS url
+            CONCAT('/root/users/add-edit.html?id=', user.id) AS url
         FROM
             user_history
             LEFT JOIN user ON user.id = user_history.fk_user_id

@@ -10,7 +10,7 @@ class Helpers {
             F::$db->sqlCommand = "
                 SELECT 
                     name AS groupname, 
-                    'root/groups/add-edit.html?id=#id#' AS details_url 
+                    '/root/groups/add-edit.html?id=#id#' AS details_url 
                 FROM user_group 
                 WHERE id = '#id#'
             ";
@@ -21,8 +21,8 @@ class Helpers {
             
             //tab links
             if(F::$request->input("id") != "") {
-                F::$doc->domBinders["tab_details_url"] = "root/groups/add-edit.html?id=". F::$request->input("id");
-                F::$doc->domBinders["tab_permissions_url"] = "root/groups/permissions.html?id=". F::$request->input("id");
+                F::$doc->domBinders["tab_details_url"] = "/root/groups/add-edit.html?id=". F::$request->input("id");
+                F::$doc->domBinders["tab_permissions_url"] = "/root/groups/permissions.html?id=". F::$request->input("id");
             }
             else {
                 F::$doc->traverse("//*[@id='tab-root/groups/permissions']//a")->setAttribute("class", "disabled");

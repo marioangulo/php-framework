@@ -9,7 +9,7 @@
     <body>
         <div class="row">
             <div class="span12">
-                <h1 class="page-header"><a href="root/users/index.html">Users</a> / Details</h1>
+                <h1 class="page-header"><a href="/root/users/index.html">Users</a> / Details</h1>
             </div>
         </div>
            
@@ -21,7 +21,7 @@
                 <form id="form" class="form-horizontal" action="" method="post" data-bind-form="get-record" data-bind-form-context="add-update-delete">
                     <fieldset>
                         <div class="control-group">
-                            <label for="is_active">Is Active:</label>
+                            <label class="control-label" for="is_active">Is Active:</label>
                             <div class="controls">
                                 <select data-bind-input="is_active" name="is_active">
                                     <option value="yes">yes</option>
@@ -31,35 +31,35 @@
                             </div>
                         </div>
                         <div class="control-group">
-                            <label for="username">Username:</label>
+                            <label class="control-label" for="username">Username:</label>
                             <div class="controls">
                                 <input type="text" data-bind-input="username" maxlength="45" size="20" name="username" />
                                 <span class="help-inline"></span>
                             </div>
                         </div>
                         <div class="control-group">
-                            <label for="email">Email:</label>
+                            <label class="control-label" for="email">Email:</label>
                             <div class="controls">
                                 <input type="text" data-bind-input="email" maxlength="128" size="40" name="email" />
                                 <span class="help-inline"></span>
                             </div>
                         </div>
                         <div class="control-group">
-                            <label for="timezone">Timezone:</label>
+                            <label class="control-label" for="timezone">Timezone:</label>
                             <div class="controls">
                                 <select name="timezone" data-bind-input="timezone" data-bind-function="Helpers::timezoneDD" ></select>
                                 <span class="help-inline"></span>
                             </div>
                         </div>
                         <div class="control-group">
-                            <label for="password">Password:</label>
+                            <label class="control-label" for="password">Password:</label>
                             <div class="controls">
                                 <input type="password" data-bind-input="password" maxlength="40" size="15" name="password" />
                                 <span class="help-inline"></span>
                             </div>
                         </div>
                         <div class="control-group">
-                            <label for="password_confirm">Confirm Password:</label>
+                            <label class="control-label" for="password_confirm">Confirm Password:</label>
                             <div class="controls">
                                 <input type="password" data-bind-input="password_confirm" maxlength="40" size="15" name="password_confirm" />
                                 <span class="help-inline"></span>

@@ -7,7 +7,7 @@
             user.is_active,
             user.username,
             user.email,
-            CONCAT('root/users/add-edit.html?id=', user.id) AS url
+            CONCAT('/root/users/add-edit.html?id=', user.id) AS url
         FROM
             user
             LEFT JOIN user_membership ON user_membership.fk_user_id = user.id

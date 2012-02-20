@@ -6,7 +6,7 @@
             id,
             fk_pivot_table,
             name,
-            CONCAT('admin/statuses/add-edit.html?id=', id) AS url
+            CONCAT('/admin/statuses/add-edit.html?id=', id) AS url
         FROM status
         WHERE
             1=1

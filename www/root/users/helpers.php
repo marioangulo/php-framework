@@ -10,7 +10,7 @@ class Helpers {
             F::$db->sqlCommand = "
                 SELECT 
                     username, 
-                    'root/users/add-edit.html?id=#id#' AS details_url 
+                    '/root/users/add-edit.html?id=#id#' AS details_url 
                 FROM user 
                 WHERE id = '#id#'
             ";
@@ -21,10 +21,10 @@ class Helpers {
             
             //tab links
             if(F::$request->input("id") != "") {
-                F::$doc->domBinders["tab_details_url"] = "root/users/add-edit.html?id=". F::$request->input("id");
-                F::$doc->domBinders["tab_groups_url"] = "root/users/groups.html?id=". F::$request->input("id");
-                F::$doc->domBinders["tab_permissions_url"] = "root/users/permissions.html?id=". F::$request->input("id");
-                F::$doc->domBinders["tab_history_url"] = "root/users/history.html?id=". F::$request->input("id");
+                F::$doc->domBinders["tab_details_url"] = "/root/users/add-edit.html?id=". F::$request->input("id");
+                F::$doc->domBinders["tab_groups_url"] = "/root/users/groups.html?id=". F::$request->input("id");
+                F::$doc->domBinders["tab_permissions_url"] = "/root/users/permissions.html?id=". F::$request->input("id");
+                F::$doc->domBinders["tab_history_url"] = "/root/users/history.html?id=". F::$request->input("id");
             }
             else {
                 F::$doc->traverse("//*[@id='tab-root/users/groups']//a")->setAttribute("class", "disabled");

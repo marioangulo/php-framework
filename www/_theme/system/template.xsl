@@ -55,7 +55,7 @@
                     <div class="container">
                         <div class="inner">
                             <p class="right">&#169; <span data-bind-text="config:copyright-year">1901</span>&#160;<span data-bind-text="config:company-name">Acme, Inc.</span></p>
-                            <p><a data-bind-attr="href=config:base-href">Home</a> | <a href="contact/index.html">Contact Us</a></p>
+                            <p><a data-bind-attr="href=config:base-href">Home</a> | <a href="/contact/index.html">Contact Us</a></p>
                         </div>
                     </div>
                 </div>

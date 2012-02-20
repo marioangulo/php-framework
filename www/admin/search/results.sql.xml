@@ -6,7 +6,7 @@
         SELECT SQL_CALC_FOUND_ROWS
             id, 
             CONCAT(name_first, ' ', name_last) AS name,
-            CONCAT('admin/accounts/add-edit.html?id=', id) AS url
+            CONCAT('/admin/accounts/add-edit.html?id=', id) AS url
         FROM account
         WHERE CONCAT(name_first, ' ', name_last) LIKE '%#q#%'
         ORDER BY LENGTH(name), name ASC
@@ -16,7 +16,7 @@
         SELECT SQL_CALC_FOUND_ROWS
             id, 
             CONCAT(name_first, ' ', name_last) AS name,
-            CONCAT('admin/administrators/add-edit.html?id=', id) AS url
+            CONCAT('/admin/administrators/add-edit.html?id=', id) AS url
         FROM admin
         WHERE CONCAT(name_first, ' ', name_last) LIKE '%#q#%'
         ORDER BY LENGTH(name), name ASC
@@ -26,7 +26,7 @@
         SELECT SQL_CALC_FOUND_ROWS
             id, 
             name,
-            CONCAT('admin/categories/add-edit.html?id=', id) AS url
+            CONCAT('/admin/categories/add-edit.html?id=', id) AS url
         FROM category
         WHERE name LIKE '%#q#%'
         ORDER BY LENGTH(name), name ASC
@@ -36,7 +36,7 @@
         SELECT SQL_CALC_FOUND_ROWS
             id, 
             name,
-            CONCAT('admin/statuses/add-edit.html?id=', id) AS url
+            CONCAT('/admin/statuses/add-edit.html?id=', id) AS url
         FROM status
         WHERE name LIKE '%#q#%'
         ORDER BY LENGTH(name), name ASC
@@ -46,7 +46,7 @@
         SELECT SQL_CALC_FOUND_ROWS
             id, 
             name,
-            CONCAT('admin/tags/add-edit.html?id=', id) AS url
+            CONCAT('/admin/tags/add-edit.html?id=', id) AS url
         FROM tag
         WHERE name LIKE '%#q#%'
         ORDER BY LENGTH(name), name ASC

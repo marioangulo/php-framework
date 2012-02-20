@@ -14,7 +14,7 @@
         SELECT 
             user.id,
             user.username,
-            CONCAT('root/users/history.html?id=', user.id) AS url,
+            CONCAT('/root/users/history.html?id=', user.id) AS url,
             FORMAT(COUNT(user_history.id), 0) AS total_count
         FROM 
             user

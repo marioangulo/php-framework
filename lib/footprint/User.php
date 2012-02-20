@@ -26,7 +26,8 @@ class User {
         //check if this user has permission
         if(!$this->hasPermission(F::$request->session("user_id"), $securityID)) {
             //get page template
-            F::$doc->loadFile(F::filePath("_theme/system/permission-denied.html"), F::$config->get("root-path"));
+            $denyDoc = new DOMTemplate_Ext();
+            $denyDoc->loadFile(F::filePath("_theme/system/permission-denied.html"), F::$config->get("root-path"));
             
             //get the security label
             F::$db->sqlCommand = "SELECT name FROM user_security WHERE id = '#security_id#'";
@@ -34,44 +35,45 @@ class User {
             $tmpSecurityLabel = F::$db->getDataString();
             
             //set some binders
-            F::$doc->domBinders["mail-to-email"] = F::$config->get("admin-email");
-            F::$doc->domBinders["mail-to-href"] = "mailto:". F::$config->get("admin-email");
-            F::$doc->domBinders["message"] = "You do not have access to '". $tmpSecurityLabel ."'.";
+            $denyDoc->domBinders["mail-to-email"] = F::$config->get("admin-email");
+            $denyDoc->domBinders["mail-to-href"] = "mailto:". F::$config->get("admin-email");
+            $denyDoc->domBinders["message"] = "You do not have access to '". $tmpSecurityLabel ."'.";
             
             //log user history
             $this->logHistory("User was denied access to '". $tmpSecurityLabel ."'. security.id='". $securityID ."'.");
             
             //do data binding
-            F::$doc->bindResources();
-            F::$doc->finalBind();
+            $denyDoc->bindResources();
+            $denyDoc->finalBind();
             
             //close db
             F::$db->close();
             
             //finalize request
-            F::$response->finalize(F::$doc->toString());
+            F::$response->finalize($denyDoc->toString());
         }
         else if(!$this->hasValidIP(F::$request->session("user_id"))) {
             //get page template
-            F::$doc->loadFile(F::filePath("_theme/system/permission-denied.html"), F::$config->get("root-path"));
+            $denyDoc = new DOMTemplate_Ext();
+            $denyDoc->loadFile(F::filePath("_theme/system/permission-denied.html"), F::$config->get("root-path"));
             
             //set some binders
-            F::$doc->domBinders["mail-to-email"] = F::$config->get("admin-email");
-            F::$doc->domBinders["mail-to-href"] = "mailto:". F::$config->get("admin-email");
-            F::$doc->domBinders["message"] = "Your IP address could not be validated.";
+            $denyDoc->domBinders["mail-to-email"] = F::$config->get("admin-email");
+            $denyDoc->domBinders["mail-to-href"] = "mailto:". F::$config->get("admin-email");
+            $denyDoc->domBinders["message"] = "Your IP address could not be validated.";
             
             //log user history
             $this->logHistory("User was denied access because their IP address could not be validated.");
             
             //do data binding
-            F::$doc->bindResources(F::$doc);
-            F::$doc->finalBind();
+            $denyDoc->bindResources();
+            $denyDoc->finalBind();
             
             //close db
             F::$db->close();
             
             //finalize request
-            F::$response->finalize(F::$doc->toString());
+            F::$response->finalize($denyDoc->toString());
         }
     }
     

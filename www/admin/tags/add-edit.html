@@ -9,7 +9,7 @@
     <body>
         <div class="row">
             <div class="span12">
-                <h1 class="page-header"><a href="admin/tags/index.html">Tags</a> / Details</h1>
+                <h1 class="page-header"><a href="/admin/tags/index.html">Tags</a> / Details</h1>
             </div>
         </div>
            
@@ -21,7 +21,7 @@
                 <form id="form" class="form-horizontal" action="" method="post" data-bind-form="get-record" data-bind-form-context="add-update-delete">
                     <fieldset>
                         <div class="control-group">
-                            <label for="is_active">Is Active:</label>
+                            <label class="control-label" for="is_active">Is Active:</label>
                             <div class="controls">
                                 <select data-bind-input="is_active" name="is_active">
                                     <option value="yes">yes</option>
@@ -31,14 +31,14 @@
                             </div>
                         </div>
                         <div class="control-group">
-                            <label for="fk_pivot_table">Pivot Table:</label>
+                            <label class="control-label" for="fk_pivot_table">Pivot Table:</label>
                             <div class="controls">
                                 <select name="fk_pivot_table" data-bind-input="fk_pivot_table" data-bind-function="Helpers::pivotTableDD"></select>
                                 <span class="help-inline"></span>
                             </div>
                         </div>
                         <div class="control-group">
-                            <label for="name">Name:</label>
+                            <label class="control-label" for="name">Name:</label>
                             <div class="controls">
                                 <input type="text" value="" maxlength="255" size="25" name="name" data-bind-input="name" />
                                 <span class="help-inline"></span>

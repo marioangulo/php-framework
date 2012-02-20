@@ -3,7 +3,7 @@
  */
 @import url(../common/jquery/jquery-ui-1.8.16.custom.css);
 @import url(../common/bootstrap/css/bootstrap.min.css);
-@import url(../common/bootstrap/css/bootstrap-responsive.css);
+@import url(../common/bootstrap/css/bootstrap-responsive.min.css);
 @import url(../common/shortcuts.css);
 
 /**
@@ -12,6 +12,11 @@
 body {
     padding-top: 60px;
     padding-bottom: 40px;
+}
+@media (max-width: 980px) {
+    body {
+        padding-top: 0px;
+    }
 }
 
 /**

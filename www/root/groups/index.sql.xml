@@ -8,7 +8,7 @@
             user_group.description,
             user_group.is_active,
             IF(ISNULL(user_group_category.id), '---', user_group_category.name) AS category,
-            CONCAT('root/groups/add-edit.html?id=', user_group.id) AS url
+            CONCAT('/root/groups/add-edit.html?id=', user_group.id) AS url
         FROM
             user_group
             LEFT JOIN user_group_category ON user_group.fk_category_id = user_group_category.id

@@ -8,8 +8,8 @@
             user_security.name,
             user_security.description,
             COUNT(user_security2.id) AS children_count,
-            CONCAT('root/security/add-edit.html?id=', user_security.id) AS url,
-            CONCAT('root/security/index.html?dk_id_parent=', user_security.id) AS dive_url
+            CONCAT('/root/security/add-edit.html?id=', user_security.id) AS url,
+            CONCAT('/root/security/index.html?dk_id_parent=', user_security.id) AS dive_url
         FROM
             user_security
             LEFT JOIN user_security AS user_security2 ON user_security2.dk_id_parent = user_security.id

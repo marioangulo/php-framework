@@ -6,7 +6,7 @@
             id,
             fk_pivot_table,
             name,
-            CONCAT('admin/categories/add-edit.html?id=', id) AS url
+            CONCAT('/admin/categories/add-edit.html?id=', id) AS url
         FROM category
         WHERE
             1=1

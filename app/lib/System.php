@@ -269,11 +269,8 @@ class System {
         //never hurts to try closing the database
         F::$db->close();
             
-        //show error screen
-        print($errorDoc->toString());
-        
-        //that's all folks
-        exit;
+        //finalize request
+        F::$response->finalize($errorDoc->toString());
     }
     
     /**

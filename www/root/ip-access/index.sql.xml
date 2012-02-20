@@ -7,7 +7,7 @@
             ip_address,
             is_active,
             description,
-            CONCAT('root/ip-access/add-edit.html?id=', id) AS url
+            CONCAT('/root/ip-access/add-edit.html?id=', id) AS url
         FROM ip_access
         WHERE
             IF(LENGTH('#is_active#') = 0, 1=1, is_active = '#is_active#' )

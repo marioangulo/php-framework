@@ -35,7 +35,7 @@
                                 <span class="icon-bar"></span>
                                 <span class="icon-bar"></span>
                             </a>
-                            <a class="brand" href="admin/index.html" data-bind-text="config:project-name">footprint</a>
+                            <a class="brand" href="/admin/index.html" data-bind-text="config:project-name">footprint</a>
                             <div class="nav-collapse">
                                 <!--xslt::tabs-->
                                 <xsl:call-template name="xslt-include">
@@ -68,8 +68,8 @@
                 <div class="footer">
                     <div class="container">
                         <div class="inner">
-                            <p class="right">&#169; <span data-bind-text="config:copyright-year">1901</span>&#160;<span data-bind-text="config:company-name">Acme, Inc.</span> [<a href="root/index.html">root</a>]</p>
-                            <p><a data-bind-attr="href=config:base-href">Home</a> | <a href="login/logout.html">Logout</a></p>
+                            <p class="right">&#169; <span data-bind-text="config:copyright-year">1901</span>&#160;<span data-bind-text="config:company-name">Acme, Inc.</span> [<a href="/root/index.html">root</a>]</p>
+                            <p><a data-bind-attr="href=config:base-href">Home</a> | <a href="/login/logout.html">Logout</a></p>
                         </div>
                     </div>
                 </div>

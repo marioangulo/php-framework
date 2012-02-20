@@ -8,9 +8,9 @@ class Helpers {
         if(F::$engineNamespace != "root/security/index") {
             //tab links
             if(F::$request->input("id") != "") {
-                F::$doc->domBinders["tab_details_url"] = "root/security/add-edit.html?id=". F::$request->input("id");
-                F::$doc->domBinders["tab_groups_url"] = "root/security/groups.html?id=". F::$request->input("id");
-                F::$doc->domBinders["tab_users_url"] = "root/security/users.html?id=". F::$request->input("id");
+                F::$doc->domBinders["tab_details_url"] = "/root/security/add-edit.html?id=". F::$request->input("id");
+                F::$doc->domBinders["tab_groups_url"] = "/root/security/groups.html?id=". F::$request->input("id");
+                F::$doc->domBinders["tab_users_url"] = "/root/security/users.html?id=". F::$request->input("id");
             }
             else {
                 F::$doc->traverse("//*[@id='tab-root/security/groups']//a")->setAttribute("class", "disabled");

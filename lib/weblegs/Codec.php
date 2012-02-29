@@ -200,6 +200,77 @@ class Codec {
     }
     
     /**
+     * does what xhtmlCleanText does but we replace [<|>|"|']
+     */
+    public static function xhtmlCleanTextNotTags($input){
+        //convert to single byte
+        $input = utf8_decode($input);
+        
+        //encode &s
+        $input = str_replace("&", "&amp;", $input);
+        
+        //build our translation table
+        $html_entity_hash = get_html_translation_table(HTML_ENTITIES); //, ENT_QUOTES
+        $html_entity_hash[chr(130)] = "&sbquo;";    // Single Low-9 Quotation Mark
+        $html_entity_hash[chr(131)] = "&fnof;";    // Latin Small Letter F With Hook
+        $html_entity_hash[chr(132)] = "&bdquo;";    // Double Low-9 Quotation Mark
+        $html_entity_hash[chr(133)] = "&hellip;";    // Horizontal Ellipsis
+        $html_entity_hash[chr(134)] = "&dagger;";    // Dagger
+        $html_entity_hash[chr(135)] = "&Dagger;";    // Double Dagger
+        $html_entity_hash[chr(136)] = "&circ;";    // Modifier Letter Circumflex Accent
+        $html_entity_hash[chr(137)] = "&permil;";    // Per Mille Sign
+        $html_entity_hash[chr(138)] = "&Scaron;";    // Latin Capital Letter S With Caron
+        $html_entity_hash[chr(139)] = "&lsaquo;";    // Single Left-Pointing Angle Quotation Mark
+        $html_entity_hash[chr(140)] = "&OElig;";    // Latin Capital Ligature OE
+        $html_entity_hash[chr(145)] = "&lsquo;";    // Left Single Quotation Mark
+        $html_entity_hash[chr(146)] = "&rsquo;";    // Right Single Quotation Mark
+        $html_entity_hash[chr(147)] = "&ldquo;";    // Left Double Quotation Mark
+        $html_entity_hash[chr(148)] = "&rdquo;";    // Right Double Quotation Mark
+        $html_entity_hash[chr(149)] = "&bull;";    // Bullet
+        $html_entity_hash[chr(150)] = "&ndash;";    // En Dash
+        $html_entity_hash[chr(151)] = "&mdash;";    // Em Dash
+        $html_entity_hash[chr(152)] = "&tilde;";    // Small Tilde
+        $html_entity_hash[chr(153)] = "&trade;";    // Trade Mark Sign
+        $html_entity_hash[chr(154)] = "&scaron;";    // Latin Small Letter S With Caron
+        $html_entity_hash[chr(155)] = "&rsaquo;";    // Single Right-Pointing Angle Quotation Mark
+        $html_entity_hash[chr(156)] = "&oelig;";    // Latin Small Ligature OE
+        $html_entity_hash[chr(159)] = "&Yuml;";    // Latin Capital Letter Y With Diaeresis
+        
+        //remove &s (we took care of this already)
+        unset($html_entity_hash[chr(38)]);
+        
+        //create replacement arrays
+        $utf8Entities = array();
+        $htmlEntities = array_values($html_entity_hash); 
+        $entitiesDecoded = array_keys($html_entity_hash);
+        
+        //build the unicode entities array
+        $num = count($entitiesDecoded); 
+        for($i = 0 ; $i < $num ; $i++) { 
+            $utf8Entities[$i] = "&#". ord($entitiesDecoded[$i]) .";"; 
+        } 
+        
+        //replace raw entities with html entities
+        $input = str_replace($entitiesDecoded, $htmlEntities, $input); 
+        
+        //replace html entities with unicode entities
+        $input = str_replace($htmlEntities, $utf8Entities, $input); 
+        
+        //fix greater than and less than signs
+        $input = str_replace("&lt;", "<", $input);
+        $input = str_replace("&gt;", ">", $input);
+        $input = str_replace("&#60;", "<", $input);
+        $input = str_replace("&#62;", ">", $input);
+        
+        $input = str_replace("&quot;", "\"", $input);
+        $input = str_replace("&#34;", "\"", $input);
+        $input = str_replace("&apos;", "'", $input);
+        
+        //give it back
+        return $input;
+    }
+    
+    /**
      * encode a string to the base64 standard
      * @param string $input the data to encode
      * @return string Transformed input

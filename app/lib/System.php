@@ -139,31 +139,22 @@ class System {
         }
         
         //build options
-            //tmp array container
-            $tmpTimeZones = array();
+            $timezones = DateTimeZone::listIdentifiers();
+            $finalTZList = array();
+            foreach($timezones AS $timezone) {
+                //get tz abbreviation
+                $dateTime = new DateTime(); 
+                $dateTime->setTimeZone(new DateTimeZone($timezone));
+                
+                $finalTZList[$timezone] = "(". $dateTime->format("P T") .") ". $timezone;
+            }
             
-            //option groups
-            $tzGroups = array(
-                "UTC" => 1024,
-                "America" => 2,
-                "Africa" => 1,
-                "Antarctica" => 4,
-                "Arctic" => 8,
-                "Asia" => 16,
-                "Atlantic" => 32,
-                "Australia" => 64,
-                "Europe" => 128,
-                "Indian" => 256,
-                "Pacific" => 512
-            );
+            //sort them by offset time
+            arsort($finalTZList);
             
-            //add the options
-            foreach($tzGroups as $group => $code) {
-                $dropDown->addOptionGroup($group);
-                $tmpTimeZones = DateTimeZone::listIdentifiers($code);
-                for($i = 0 ; $i < count($tmpTimeZones) ; $i++) {
-                    $dropDown->addOption($tmpTimeZones[$i], $tmpTimeZones[$i]);
-                }
+            foreach($finalTZList AS $key => $value) {
+                //add option
+                $dropDown->addOption($value, $key);
             }
         //end build options
         

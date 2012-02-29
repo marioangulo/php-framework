@@ -697,6 +697,13 @@ class DOMTemplate_Ext extends DOMTemplate {
             //set storage data
             $chunk->traverse("//*[@data-label='paging']")->setAttribute("data-current-page", F::$dataPager->currentPage);
             
+            //show the data
+            $chunk->traverse("//*[@data-label='pager_current_page']")->setInnerText(F::$dataPager->currentPage);
+            $chunk->traverse("//*[@data-label='pager_total_pages']")->setInnerText(F::$dataPager->getTotalPages());
+            $chunk->traverse("//*[@data-label='pager_record_start']")->setInnerText((F::$dataPager->getRecordToStart() + (F::$dataPager->totalRecords == 0 ? 0 : 1)));
+            $chunk->traverse("//*[@data-label='pager_record_end']")->setInnerText(F::$dataPager->getRecordToStop());
+            $chunk->traverse("//*[@data-label='pager_total_records']")->setInnerText(F::$dataPager->totalRecords);
+            
             //replace prev/next
             if(F::$dataPager->hasPreviousPage() == false) {
                 $chunk->traverse("//*[@data-label='pager_prev']")->setAttribute("class", "disabled");

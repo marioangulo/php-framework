@@ -115,15 +115,30 @@ class DOMTemplate_Ext extends DOMTemplate {
         }
         
         //get data
-        $data = array();
-        if(!isset($this->resultsCache[$resourceID])) {
-            F::$db->loadCommand($resourceID, F::$engineArgs);
-            $this->resultsCache[$resourceID] = F::$db->getDataTable();
-        }
-        else {
-            F::sysLog("<!--used cached result data-->");
-        }
-        $data = $this->resultsCache[$resourceID];
+            $data = array();
+            if(!isset($this->resultsCache[$resourceID])) {
+                F::$db->loadCommand($resourceID, F::$engineArgs);
+                $this->resultsCache[$resourceID] = F::$db->getDataTable();
+            }
+            else {
+                F::sysLog("<!--used cached result data-->");
+            }
+            $data = $this->resultsCache[$resourceID];
+            
+            //get found rows
+            $tmpFoundRows = F::$db->getFoundRows();
+            
+            //apply data paging?
+            if($table->root()->getAttribute("data-bind-paging") != "") {
+                F::$timer->stop();
+                F::$dataPager->totalRecords = $tmpFoundRows;
+                $this->bindDataPaging($resourceID, $table->root()->getAttribute("data-bind-paging"));
+            }
+            
+            //setup the extra data binder features
+            $this->domBinders[$resourceID ."-found-rows"] = number_format($tmpFoundRows);
+            $this->domBinders[$resourceID ."-count"] = count($data);
+        //end get data
         
         //if columns, items per column
         if($totalColumns > 1) {
@@ -192,20 +207,6 @@ class DOMTemplate_Ext extends DOMTemplate {
             //remove blank-row
             $row->remove();
         }
-        
-        //get found rows
-        $tmpFoundRows = F::$db->getFoundRows();
-        
-        //apply data paging?
-        if($table->root()->getAttribute("data-bind-paging") != "") {
-            F::$timer->stop();
-            F::$dataPager->totalRecords = $tmpFoundRows;
-            $this->bindDataPaging($resourceID, $table->root()->getAttribute("data-bind-paging"));
-        }
-        
-        //setup the extra data binder features
-        $this->domBinders[$resourceID ."-found-rows"] = number_format($tmpFoundRows);
-        $this->domBinders[$resourceID ."-count"] = count($data);
         
         //cleanup empty columns
         if($totalColumns > 1) {
